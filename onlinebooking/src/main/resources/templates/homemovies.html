@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home|Theatre Booking</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/homeflight.css}" />
+
+
+       <!-- ===========owl carousel css======== -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/homemovies.css}" />
+
+    </head>
+
+    <body>
+        <!-- navbar -->
+        <div th:replace="fragments :: navbar"></div>
+
+     <div th:replace="fragments :: booking-menus"></div>
+
+
+      <!-- ============banner=========== -->
+<section class="banner">
+
+    <div class="banner-img">
+        <img th:src="@{/images/homemovies/banner-movie.png}" alt="">
+    </div>
+
+    <div class="overlay-text">
+        <h2>Book Movie Ticket Instantly</h2>
+        <p>Discover the latest movies, exploring show time near you ,reserves your <br> seats in just afw clicks</p>
+    </div>
+
+        <!-- FORM-->
+        <div class="form">
+    <form action="/flights" method="get">
+
+        <input type="text" name="from" placeholder="From" required>
+        <input type="text" name="to" placeholder="To" required>
+       
+
+        <button type="submit">Find Movie</button>
+
+    </form>
+</div>
+
+</section>
+
+
+<!-- ======================filters and cards ============ -->
+
+
+<section class="movie-section">
+
+    <!-- FILTERS -->
+    <div class="movie-filters">
+        <div class="movie-filter-header">
+            <h2>Filters</h2>
+        </div>
+
+        <form action="/movies" method="get">
+
+            <!-- Status -->
+            <div class="movie-filter-group">
+                <div class="movie-filter-label" onclick="toggleMovieFilter('status')">
+                    <h3>Status</h3>
+                    <i class="fa-solid fa-chevron-up" id="icon-status"></i>
+                </div>
+                <div class="movie-filter-content" id="status">
+                    <label class="movie-radio">
+                        <input type="radio" name="status" value="all" checked> All
+                    </label>
+                    <label class="movie-radio">
+                        <input type="radio" name="status" value="Now Showing"> Now Showing
+                    </label>
+                    <label class="movie-radio">
+                        <input type="radio" name="status" value="Coming Soon"> Coming Soon
+                    </label>
+                </div>
+            </div>
+
+            <!-- Language -->
+            <div class="movie-filter-group">
+                <div class="movie-filter-label" onclick="toggleMovieFilter('language')">
+                    <h3>Language</h3>
+                    <i class="fa-solid fa-chevron-down" id="icon-language"></i>
+                </div>
+                <div class="movie-filter-content hidden" id="language">
+                    <label class="movie-radio">
+                        <input type="radio" name="language" value="all" checked> All
+                    </label>
+                    <label class="movie-radio">
+                        <input type="radio" name="language" value="English"> English
+                    </label>
+                    <label class="movie-radio">
+                        <input type="radio" name="language" value="Tamil"> Tamil
+                    </label>
+                    <label class="movie-radio">
+                        <input type="radio" name="language" value="Telugu"> Telugu
+                    </label>
+                    <label class="movie-radio">
+                        <input type="radio" name="language" value="Hindi"> Hindi
+                    </label>
+                    <label class="movie-radio">
+                        <input type="radio" name="language" value="Kannada"> Kannada
+                    </label>
+                </div>
+            </div>
+
+            <!-- Genres -->
+            <div class="movie-filter-group">
+                <div class="movie-filter-label" onclick="toggleMovieFilter('genre')">
+                    <h3>Genres</h3>
+                    <i class="fa-solid fa-chevron-down" id="icon-genre"></i>
+                </div>
+                <div class="movie-filter-content hidden" id="genre">
+                    <label class="movie-check">
+                        <input type="checkbox" name="genre" value="Action"> Action
+                    </label>
+                    <label class="movie-check">
+                        <input type="checkbox" name="genre" value="Drama"> Drama
+                    </label>
+                    <label class="movie-check">
+                        <input type="checkbox" name="genre" value="Thriller"> Thriller
+                    </label>
+                    <label class="movie-check">
+                        <input type="checkbox" name="genre" value="Sport"> Sport
+                    </label>
+                    <label class="movie-check">
+                        <input type="checkbox" name="genre" value="Horror"> Horror
+                    </label>
+                    <label class="movie-check">
+                        <input type="checkbox" name="genre" value="Comedy"> Comedy
+                    </label>
+                    <label class="movie-check">
+                        <input type="checkbox" name="genre" value="Adventure"> Adventure
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="apply-btn">Apply Filters</button>
+        </form>
+    </div>
+
+    <!-- MOVIE CARDS -->
+    <div class="movie-cards-section">
+        <div class="movie-cards" id="movieCards">
+
+            <div class="movie-card" th:each="movie : ${movies}">
+                <div class="movie-img">
+                    <img th:src="@{'/images/homemovies/' + ${movie.image}}" alt="">
+                    <div class="movie-status-badge"
+                         th:classappend="${movie.status == 'Now Showing'} ? ' now' : ' soon'"
+                         th:text="${movie.status}">
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 th:text="${movie.title}"></h3>
+                    <p class="movie-lang">
+                        Language: <span th:text="${movie.language}"></span>
+                    </p>
+                    <p class="movie-release" th:if="${movie.status == 'Coming Soon'}">
+                        Releasing: <span th:text="${movie.releaseDate}"></span>
+                    </p>
+                    <div class="movie-card-bottom">
+                        <span class="movie-rating" th:if="${movie.rating > 0}">
+                            <i class="fa-solid fa-star"></i>
+                            <span th:text="${movie.rating}"></span>
+                        </span>
+                        <a th:href="@{/moviebooking/{id}(id=${movie.id})}"
+                           th:if="${movie.status == 'Now Showing'}"
+                           class="movie-book-btn">Book Now</a>
+                        <span th:if="${movie.status == 'Coming Soon'}"
+                              class="movie-soon-btn">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================cta========== -->
+<div class="cta-1">
+<section class="cta">
+    <div class="overlay"></div>
+
+    <div class="cta-content">
+        <h1>Exclusive movie Offers</h1>
+        <p>
+           Get Exciting discounts on movie tickets and enjoy supere deals <br>
+           on snacks and combo packages at  partner theatres.
+        </p>
+
+        <div class="buttons">
+            <button class="btn primary">Book Movie Tickets</button>
+            
+        </div>
+    </div>
+</section>
+</div>
+
+           <!-- =============footer ======================-->
+        <div th:replace="fragments :: footer"></div>
+
+
+          <!-- scripts -->
+<!-- ===========owl carousel======== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ <script th:src="@{/js/owl.js}"></script>
+
+
+<script>
+function toggleMovieFilter(id) {
+    const content = document.getElementById(id);
+    const icon = document.getElementById('icon-' + id);
+    content.classList.toggle('hidden');
+    icon.classList.toggle('fa-chevron-down');
+    icon.classList.toggle('fa-chevron-up');
+}
+</script>
+
+
+    </body>
+
+    </html>

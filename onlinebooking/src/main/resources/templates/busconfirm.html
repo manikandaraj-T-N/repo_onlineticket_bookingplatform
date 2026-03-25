@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Booking Confirmed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+     <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/busconfirm.css}" />
+    
+</head>
+<body>
+
+<div th:replace="~{fragments :: navbar}"></div>
+<div th:replace="~{fragments :: booking-menus}"></div>
+
+<div class="confirm-card" style="margin-top:30px;">
+    <div class="confirm-top">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>Bus Booked!</h2>
+        <p>Your bus ticket has been successfully booked. Have a safe journey!</p>
+    </div>
+
+    <div class="confirm-body">
+
+        <div class="ref-row">
+            <span>Booking Reference</span>
+            <span class="ref-value">BUS-<span th:text="${booking.id}"></span></span>
+        </div>
+        <div class="ref-row">
+            <span>Booking Date</span>
+            <span class="ref-value" th:text="${booking.bookingDate}"></span>
+        </div>
+
+        <p class="sec-title">Journey Details</p>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-bus"></i></div>
+            <div class="text">
+                <h4 th:text="${bus.busName}"></h4>
+                <p>Bus No: <span th:text="${bus.busNumber}"></span> |
+                   Type: <span th:text="${bus.busType}"></span></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="text">
+                <h4>Route</h4>
+                <p>
+                    <span th:text="${bus.fromPlace}"></span> →
+                    <span th:text="${bus.toPlace}"></span>
+                </p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-regular fa-calendar"></i></div>
+            <div class="text">
+                <h4 th:text="${bus.travelDate}"></h4>
+                <p>
+                    <span th:text="${bus.departureTime}"></span> -
+                    <span th:text="${bus.arrivalTime}"></span>
+                </p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-map-pin"></i></div>
+            <div class="text">
+                <h4>Boarding Point</h4>
+                <p th:text="${booking.boardingPoint}"></p>
+            </div>
+        </div>
+
+
+<div class="detail-item">
+    <div class="icon"><i class="fa-solid fa-chair"></i></div>
+    <div class="text">
+        <h4>Selected Seats</h4>
+        <p th:text="${booking.selectedSeats}"></p>
+    </div>
+</div>
+
+        <!-- <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-users"></i></div>
+            <div class="text">
+                <h4>Seats Booked</h4>
+                <p th:text="${booking.seats}"></p>
+            </div>
+        </div> -->
+
+        <div class="total-row">
+            <span>Total Amount Paid</span>
+            <span class="total-price">₹<span th:text="${bus.price * booking.seats}"></span></span>
+        </div>
+
+        <div class="btn-row">
+            <a th:href="@{/busbooking/download/{id}(id=${booking.id})}" class="btn-mybookings">
+                <i class="fa-solid fa-download"></i> Download Ticket
+            </a>
+            <a href="/homebus" class="btn-back">← Back to Buses</a>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+</body>
+</html>

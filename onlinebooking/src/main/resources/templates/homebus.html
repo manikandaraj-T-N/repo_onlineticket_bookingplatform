@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home|Bus Booking</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/homebus.css}" />
+
+
+       <!-- ===========owl carousel css======== -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    </head>
+
+    <body>
+    <!-- navbar -->
+    <div th:replace="~{fragments :: navbar}"></div>
+    <div th:replace="~{fragments :: booking-menus}"></div>
+
+    <!-- BANNER -->
+    <section class="banner">
+        <div class="banner-img">
+            <img th:src="@{/images/homebus/banner-bus.png}" alt="">
+        </div>
+
+        <div class="overlay-text">
+            <h2>Travel Comfortably by Bus</h2>
+            <p>Search and compare bus routes, operators, and schedules to find the best journey for your trip</p>
+        </div>
+
+        <div class="form">
+            <form action="/buses" method="get">
+                <input type="text" name="from" placeholder="From city" required>
+                <input type="text" name="to" placeholder="To city" required>
+                <input type="date" name="date" required>
+                <button type="submit">Search Bus</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FILTERS & CARDS -->
+    <section class="booking">
+
+       <form action="/buses" method="get">
+    <div class="filters">
+        <div class="filter-header">
+            <h2>Filters</h2>
+        </div>
+
+        <div class="filter-body">
+
+            <!-- Price Range -->
+            <div class="filter-group">
+                <div class="filter-label" onclick="toggleFilter('price')">
+                    <span>Price Range</span>
+                    <i class="fa-solid fa-chevron-up" id="icon-price"></i>
+                </div>
+                <div class="filter-content" id="price">
+                    <input type="range" id="maxPrice" min="100" max="1200" value="1200">
+                    <input type="hidden" id="maxPriceHidden" name="maxPrice" value="1200">
+                    <div class="range-labels">
+                        <span>₹100</span>
+                        <span>₹<span id="maxVal">1,200</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Departure Time -->
+            <div class="filter-group">
+                <div class="filter-label" onclick="toggleFilter('departure')">
+                    <span>Departure Time</span>
+                    <i class="fa-solid fa-chevron-up" id="icon-departure"></i>
+                </div>
+                <div class="filter-content" id="departure">
+                    <label><input type="checkbox" name="departure" value="morning"> Morning (6AM - 12PM)</label>
+                    <label><input type="checkbox" name="departure" value="afternoon"> Afternoon (12PM - 6PM)</label>
+                    <label><input type="checkbox" name="departure" value="evening"> Evening (6PM - 12AM)</label>
+                </div>
+            </div>
+
+            <!-- Bus Type -->
+            <div class="filter-group">
+                <div class="filter-label" onclick="toggleFilter('bustype')">
+                    <span>Bus Type</span>
+                    <i class="fa-solid fa-chevron-down" id="icon-bustype"></i>
+                </div>
+                <div class="filter-content hidden" id="bustype">
+                    <label><input type="checkbox" name="busType" value="AC"> AC</label>
+                    <label><input type="checkbox" name="busType" value="Non-AC"> Non-AC</label>
+                    <label><input type="checkbox" name="busType" value="Sleeper"> Sleeper</label>
+                    <label><input type="checkbox" name="busType" value="AC Sleeper"> AC Sleeper</label>
+                    <label><input type="checkbox" name="busType" value="Semi-Sleeper"> Semi-Sleeper</label>
+                </div>
+            </div>
+
+            <!-- Bus Operator -->
+            <div class="filter-group">
+                <div class="filter-label" onclick="toggleFilter('operator')">
+                    <span>Bus Operator</span>
+                    <i class="fa-solid fa-chevron-down" id="icon-operator"></i>
+                </div>
+                <div class="filter-content hidden" id="operator">
+                    <label><input type="radio" name="operator" value="all" checked> All</label>
+                    <label><input type="radio" name="operator" value="TNSTC Volvo"> TNSTC Volvo</label>
+                    <label><input type="radio" name="operator" value="SRM Travels"> SRM Travels</label>
+                    <label><input type="radio" name="operator" value="KPN Travels"> KPN Travels</label>
+                    <label><input type="radio" name="operator" value="Orange Travels"> Orange Travels</label>
+                    <label><input type="radio" name="operator" value="Parveen Travels"> Parveen Travels</label>
+                    <label><input type="radio" name="operator" value="VRL Travels"> VRL Travels</label>
+                    <label><input type="radio" name="operator" value="SRS Travels"> SRS Travels</label>
+                </div>
+            </div>
+
+            <!-- Boarding Point -->
+            <div class="filter-group">
+                <div class="filter-label" onclick="toggleFilter('boarding')">
+                    <span>Boarding Point</span>
+                    <i class="fa-solid fa-chevron-up" id="icon-boarding"></i>
+                </div>
+                <div class="filter-content" id="boarding">
+                    <label class="boarding-label">
+                        <i class="fa-solid fa-bus" style="color:var(--color-secondary)"></i>
+                        <input type="radio" name="boardingPoint" value="all" checked>
+                        <span style="color:var(--color-secondary); font-weight:600;">All</span>
+                    </label>
+                    <label class="boarding-label">
+                        <i class="fa-solid fa-bus" style="color:var(--color-secondary)"></i>
+                        <input type="radio" name="boardingPoint" value="Koyambedu"> Koyambedu
+                    </label>
+                    <label class="boarding-label">
+                        <i class="fa-solid fa-bus"></i>
+                        <input type="radio" name="boardingPoint" value="Perungalathur"> Perungalathur
+                    </label>
+                    <label class="boarding-label">
+                        <i class="fa-solid fa-bus"></i>
+                        <input type="radio" name="boardingPoint" value="Tambaram"> Tambaram
+                    </label>
+                    <label class="boarding-label">
+                        <i class="fa-solid fa-bus"></i>
+                        <input type="radio" name="boardingPoint" value="Guindy"> Guindy
+                    </label>
+                    <label class="boarding-label">
+                        <i class="fa-solid fa-bus"></i>
+                        <input type="radio" name="boardingPoint" value="CMBT"> CMBT
+                    </label>
+                </div>
+            </div>
+
+            <input type="hidden" name="from" th:value="${param.from}">
+            <input type="hidden" name="to" th:value="${param.to}">
+            <input type="hidden" name="date" th:value="${param.date}">
+
+        </div>
+    </div>
+   <button type="button" class="apply-btn" onclick="applyFilters()">Apply Filters</button>
+        </form>
+
+
+        <!-- ==================bus cards============ -->
+<div class="availables" id="busResults">
+
+    <div class="results-info" th:if="${totalBuses != null}">
+        <p>Showing <strong th:text="${buses.size()}"></strong> of
+           <strong th:text="${totalBuses}"></strong> buses</p>
+    </div>
+
+    <div class="card" th:each="bus : ${buses}">
+        <div class="left">
+            <div class="heading-icon">
+                <div class="title">
+                    <h3>
+                        <span th:text="${bus.busName}"></span>
+                        (<span th:text="${bus.busType}"></span>)
+                    </h3>
+                    <p><strong>Amenities:</strong> WiFi • Charging • Blanket • Water Bottle</p>
+                </div>
+            </div>
+
+            <div class="dep-arri">
+                <div class="dep">
+                    <p class="title">Departure</p>
+                    <p class="time" th:text="${bus.departureTime}"></p>
+                    <p class="place" th:text="${bus.fromPlace}"></p>
+                </div>
+
+                <div class="duration-center">
+                    <p><i class="fa-regular fa-clock"></i> <span th:text="${bus.duration}"></span></p>
+                    <p th:text="${bus.busType}"></p>
+                </div>
+
+                <div class="arri">
+                    <p class="title">Arrival</p>
+                    <p class="time" th:text="${bus.arrivalTime}"></p>
+                    <p class="place" th:text="${bus.toPlace}"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <p class="price">₹<span th:text="${bus.price}"></span></p>
+            <button>
+                <a th:href="@{/busbooking/{id}(id=${bus.id})}">View Seats</a>
+            </button>
+
+            <button>
+        <a th:href="@{/busbooking/{id}(id=${bus.id})}">Book Now</a>
+    </button>
+
+        </div>
+    </div>
+
+    <!-- NO RESULTS -->
+    <div th:if="${#lists.isEmpty(buses)}" class="no-results">
+        <i class="fa-solid fa-bus" style="font-size:40px; color:#ddd;"></i>
+        <p>No buses found. Try different filters.</p>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination" th:if="${totalPages > 1}">
+        <button class="page-btn"
+                th:disabled="${currentPage == 0}"
+                th:onclick="|changePage(${currentPage - 1})|">
+            ← Prev
+        </button>
+
+        <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <button class="page-btn"
+                    th:classappend="${i == currentPage} ? ' active' : ''"
+                    th:onclick="|changePage(${i})|"
+                    th:text="${i + 1}">
+            </button>
+        </span>
+
+        <button class="page-btn"
+                th:disabled="${currentPage == totalPages - 1}"
+                th:onclick="|changePage(${currentPage + 1})|">
+            Next →
+        </button>
+    </div>
+
+</div>
+    </section>
+
+    <!-- POPULAR ROUTES
+    <section class="popular-routes">
+        <h2 class="routes-title">Popular Routes</h2>
+        <div class="routes-banner">
+            <a href="/buses?from=Chennai&to=Bangalore" class="route-pill">Chennai → Bangalore</a>
+            <a href="/buses?from=Chennai&to=Coimbatore" class="route-pill">Chennai → Coimbatore</a>
+            <a href="/buses?from=Chennai&to=Madurai" class="route-pill">Chennai → Madurai</a>
+            <a href="/buses?from=Chennai&to=Hyderabad" class="route-pill">Chennai → Hyderabad</a>
+        </div>
+    </section> -->
+
+
+    <!-- ============customers=================== -->
+<section class="customers">
+    <h2 class="customers-title">Happy Customers</h2>
+
+    <div class="owl-carousel owl-customers">
+
+        <div class="review-card">
+            <div class="review-top">
+                <img src="/images/homebus/customer-1.jpg" alt="Priya Sharma">
+                <p>"Great experience! The bus was comfortable and the departure details were accurate. I will definitely book my next trip here."</p>
+            </div>
+            <div class="review-bottom">
+                <div class="review-info">
+                    <p class="name">Priya Sharma</p>
+                    <p class="location">Ahmedabad, India</p>
+                </div>
+                <div class="quote-icon"><span><i class="fa-solid fa-quote-left"></i></span></div>
+            </div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-top">
+                <img src="/images/homebus/customer-2.jpg" alt="Priya Sharma">
+                <p>"Booking my flight and concert tickets was incredibly easy with TicketVerse. Everything was in one place and the process was super fast."</p>
+            </div>
+            <div class="review-bottom">
+                <div class="review-info">
+                    <p class="name">Priya Sharma</p>
+                    <p class="location">Chennai, India</p>
+                </div>
+                <div class="quote-icon"><span><i class="fa-solid fa-quote-left"></i></span></div>
+            </div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-top">
+                <img src="/images/homebus/customer-1.jpeg" alt="Arun Kumar">
+                <p>"Booking my bus ticket was very easy and fast. The seat selection and journey details were clear, and I received my ticket instantly."</p>
+            </div>
+            <div class="review-bottom">
+                <div class="review-info">
+                    <p class="name">Arun Kumar</p>
+                    <p class="location">Chennai, India</p>
+                </div>
+                <div class="quote-icon"><span><i class="fa-solid fa-quote-left"></i></span></div>
+            </div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-top">
+                <img src="/images/homebus/customer-1.jpeg" alt="Meena Raj">
+                <p>"The filters made it so easy to find the right bus. I selected AC Sleeper and got great options instantly. Highly recommend!"</p>
+            </div>
+            <div class="review-bottom">
+                <div class="review-info">
+                    <p class="name">Meena Raj</p>
+                    <p class="location">Coimbatore, India</p>
+                </div>
+                <div class="quote-icon"><span><i class="fa-solid fa-quote-left"></i></span></div>
+            </div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-top">
+                <img src="/images/homebus/customer-2.png" alt="Ravi Shankar">
+                <p>"I travel frequently between Chennai and Bangalore. TicketVerse always gives me the best bus options at the right price."</p>
+            </div>
+            <div class="review-bottom">
+                <div class="review-info">
+                    <p class="name">Ravi Shankar</p>
+                    <p class="location">Bangalore, India</p>
+                </div>
+                <div class="quote-icon"><span><i class="fa-solid fa-quote-left"></i></span></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <!-- =================cta============ -->
+    <div class="cta-1">
+        <section class="cta">
+            <div class="overlay"></div>
+            <div class="cta-content">
+                <p class="heading">Ready to Book Your Bus?</p>
+                <p>Search hundreds of buses and find the best deal for your journey.</p>
+                <div class="buttons">
+                    <button class="btn primary">Search Buses</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ====================FOOTER========================== -->
+    <div th:replace="~{fragments :: footer}"></div>
+
+    <!-- SCRIPTS -->
+
+                    <!-- =owl carousel= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+<script th:src="@{js/owl.js}"></script>
+
+
+<script>
+    const maxRange = document.getElementById("maxPrice");
+const maxVal = document.getElementById("maxVal");
+const maxHidden = document.getElementById("maxPriceHidden");
+
+maxRange.addEventListener("input", () => {
+    maxVal.innerText = parseInt(maxRange.value).toLocaleString();
+    maxHidden.value = maxRange.value;
+});
+
+function toggleFilter(id) {
+    const content = document.getElementById(id);
+    const icon = document.getElementById('icon-' + id);
+    content.classList.toggle('hidden');
+    icon.classList.toggle('fa-chevron-down');
+    icon.classList.toggle('fa-chevron-up');
+}
+
+function applyFilters() {
+    fetchBuses(0);  // always start from page 0 when applying filters
+}
+
+function changePage(page) {
+    fetchBuses(page);
+}
+
+function fetchBuses(page) {
+    // collect all form values
+    const form = document.querySelector('form');
+    const formData = new FormData(form);
+    formData.set('page', page);
+    formData.set('maxPrice', maxHidden.value);
+
+    const params = new URLSearchParams(formData).toString();
+
+    // update URL without reload
+    window.history.pushState({}, '', '/buses?' + params);
+
+    // fetch only the results section
+    fetch('/buses?' + params, {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(res => res.text())
+    .then(html => {
+        // extract only #busResults from response
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newResults = doc.getElementById('busResults');
+        document.getElementById('busResults').innerHTML = newResults.innerHTML;
+    })
+    .catch(err => console.error('Filter error:', err));
+}
+</script>
+
+</body>
+
+    </html>

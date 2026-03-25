@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+
+
+
+    <!-- ===========owl carousel css======== -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+    <!-- navbar -->
+    <div th:replace="fragments :: navbar"></div>
+
+     <div th:replace="fragments :: booking-menus"></div>
+    
+     <!-- ============banner=========== -->
+<section class="banner">
+
+    <div class="owl-carousel">
+        <div class="img" th:style="'background-image: url(' + @{/images/home/banner-train.png} + ')'"></div>
+        <div class="img" th:style="'background-image: url(' + @{/images/home/banner-moive.png} + ')'"></div>
+        <div class="img" th:style="'background-image: url(' + @{/images/home/banner-flightsea.png} + ')'"></div>
+        <div class="img" th:style="'background-image: url(' + @{/images/home/banner-riding.png} + ')'"></div>
+        <div class="img" th:style="'background-image: url(' + @{/images/home/banner-football.png} + ')'"></div>
+    </div>
+
+    <div class="overlay-text">
+        <h2>Book Everything, Everywhere</h2>
+        <p>From flights to movies, events to experiences – all in one place</p>
+    </div>
+
+    <div class="booking-box">
+         <!-- TABS -->
+        <div class="tabs">
+            <button type="button" class="tab active" onclick="showForm(event, 'flight')">Flights</button>
+            <button type="button" class="tab" onclick="showForm(event, 'train')">Train</button>
+            <button type="button" class="tab" onclick="showForm(event, 'bus')">Bus</button>
+            <button type="button" class="tab" onclick="showForm(event, 'movie')">Movies</button>
+            <button type="button" class="tab" onclick="showForm(event, 'event')">Events</button>
+        </div>
+
+        <!-- FORMS -->
+        <div class="forms">
+
+            <div id="flight" class="form active">
+                <input type="text" placeholder="From">
+                <input type="text" placeholder="To">
+                <input type="date" placeholder="Departure Date">
+                <button type="submit">Search Flight</button>
+            </div>
+
+            <div id="train" class="form">
+                <input type="text" placeholder="From">
+                <input type="text" placeholder="To">
+                <button type="submit">Search Train</button>
+            </div>
+
+            <div id="bus" class="form">
+                <input type="text" placeholder="From">
+                <input type="text" placeholder="To">
+                <button type="submit">Search Bus</button>
+            </div>
+
+            <div id="movie" class="form">
+                <input type="text" placeholder="City">
+                <button type="submit">Search Movies</button>
+            </div>
+
+            <div id="event" class="form">
+                <input type="text" placeholder="Event Name">
+                <button type="submit">Search Events</button>
+            </div>
+       </div>
+       
+    </div>
+</section>
+
+<!-- =========================services======================== -->
+<section class="services">
+    <div class="heading">
+<h1>What would you like took?</h1>
+<p>Choose from our wide range of services</p>
+
+    </div>
+
+<!-- <div class="cards">
+    <div class="card"><img th:src="@{/images/home/c1.png}" alt=""><span><i class="fa-solid fa-plane"></i></span></div>
+    <div class="card"><img th:src="@{/images/home/c2.png}" alt=""><span><i class="fa-solid fa-bus"></i></span></div>
+    <div class="card"><img th:src="@{/images/home/c3.png}" alt=""><span><i class="fa-solid fa-train"></i></span></div>
+    <div class="card"><img th:src="@{/images/home/c4.png}" alt=""><span><i class="fa-solid fa-hotel"></i></span></div>
+    <div class="card"><img th:src="@{/images/home/c5.png}" alt=""><span><i class="fa-regular fa-calendar-check"></i></span></div>
+    <div class="card"><img th:src="@{/images/home/c6.png}" alt=""><span><i class="fa-regular fa-calendar"></i></span></div>
+    <div class="card"><img th:src="@{/images/home/c7.png}" alt=""><span><i class="fa-regular fa-futbol"></i></span></div>
+    <div class="card"><img th:src="@{/images/home/c8.png}" alt=""><span><i class="fa-solid fa-clapperboard"></i></span></div>
+</div> -->
+
+<div class="cards">
+    <a href="/homeflight" class="card">
+        <img th:src="@{/images/home/c1.png}" alt="">
+        <span><i class="fa-solid fa-plane"></i></span>
+    </a>
+    <a href="/homebus" class="card">
+        <img th:src="@{/images/home/c2.png}" alt="">
+        <span><i class="fa-solid fa-bus"></i></span>
+    </a>
+    <a href="/hometrain" class="card">
+        <img th:src="@{/images/home/c3.png}" alt="">
+        <span><i class="fa-solid fa-train"></i></span>
+    </a>
+    <a href="/homehotels" class="card">
+        <img th:src="@{/images/home/c4.png}" alt="">
+        <span><i class="fa-solid fa-hotel"></i></span>
+    </a>
+    <a href="/homeevents" class="card">
+        <img th:src="@{/images/home/c5.png}" alt="">
+        <span><i class="fa-regular fa-calendar-check"></i></span>
+    </a>
+    <a href="/homeactivities" class="card">
+        <img th:src="@{/images/home/c6.png}" alt="">
+        <span><i class="fa-regular fa-calendar"></i></span>
+    </a>
+    <a href="/homesports" class="card">
+        <img th:src="@{/images/home/c7.png}" alt="">
+        <span><i class="fa-regular fa-futbol"></i></span>
+    </a>
+    <a href="/homemovies" class="card">
+        <img th:src="@{/images/home/c8.png}" alt="">
+        <span><i class="fa-solid fa-clapperboard"></i></span>
+    </a>
+</div>
+</section>
+
+<!-- ======================about================= -->
+
+<section class="about">
+    <div class="about-1">
+
+          <div class="left">
+    <div class="img-box">
+        <img th:src="@{/images/home/aboutimage.png}" alt="">
+    </div>
+        </div>
+
+    <div class="right">
+        <div class="heading">
+            <h4>About TicketVerse</h4>
+             <h2>Your All-in-One Platform for Travel,<br> Events and Experiences</h2>
+        </div>
+        
+        <p>We are a leading online ticket booking platform dedicated to providing seamless and convenient booking experiences for our customers. With a wide range of services including flights, trains, buses, movies, events, and more, we strive to be your one-stop destination for all your travel and entertainment needs. Our mission is to make booking easy, efficient, and enjoyable for everyone.</p>
+
+        <div class="list">
+            <ul>
+                <li><span><i class="fa-solid fa-check"></i></span>Easy Booking</li>
+                <li><span><i class="fa-solid fa-check"></i></span>Secure Payments</li>
+                <li><span><i class="fa-solid fa-check"></i></span>Wide Selection</li>
+                <li><span><i class="fa-solid fa-check"></i></span>Instant Confirmation</li>
+            </ul>
+            <button type="button">About</button>
+        </div>
+    </div>
+
+    </div>
+  
+
+     <!-- ====================experience================= -->
+<div class="experience">
+    
+    <div class="heading">
+        <h1>Trending Experience</h1>
+        <p>Discover the most popular destinations and events people are booking right now.</p>
+    </div>
+
+    <div class="owl-carousel experience-carousel">
+     
+    <div class="content">
+    <div class="image">
+        <img th:src="@{/images/home/event-1.png}" alt="">
+    </div>
+    <div class="date-rating">
+        <div class="date">
+            <span><i class="fa-solid fa-calendar"></i> 20-30 Jan</span>
+        </div>
+
+        <div class="rating">
+            <span><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+             <i class="fa-solid fa-star"></i>
+             <i class="fa-solid fa-star-half-stroke"></i> 4.5</span>
+        </div>
+       
+        
+    </div>
+    <div class="event">
+        <p>span</p>
+        <h3>Chennai To Bangalore</h3>
+    </div>
+    <hr>
+
+    <div class="price-paymentbtn">
+        <p>$100</p>
+        <button type="button">Book Now</button>
+    </div>
+    </div>
+ 
+  <div class="content">
+    <div class="image">
+        <img th:src="@{/images/home/event-3.png}" alt="">
+    </div>
+    <div class="date-rating">
+        <div class="date">
+            <span><i class="fa-solid fa-calendar"></i> 5-10 Feb</span>
+        </div>
+        <div class="rating">
+            <span>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star-half-stroke"></i> 4.5
+        </span>
+        </div>
+    </div>
+
+    <div class="event">
+        <p>Music</p>
+        <h3>AR Rahman Live Concert</h3>
+    </div>
+    <hr>
+    <div class="price-paymentbtn">
+        <p>$120</p>
+        <button type="button">Book Now</button>
+    </div>
+</div>
+
+<div class="content">
+    <div class="image">
+        <img th:src="@{/images/home/event-2.png}" alt="">
+    </div>
+    <div class="date-rating">
+        <div class="date">
+            <span><i class="fa-solid fa-calendar"></i> 12-18 Feb</span>
+        </div>
+
+        <div class="rating">
+        <span>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i> 4.0
+        </span>
+        </div>
+        
+       
+    </div>
+    <div class="event">
+        <p>Sports</p>
+        <h3>IPL 2026 Championship</h3>
+    </div>
+    <hr>
+    <div class="price-paymentbtn">
+        <p>$80</p>
+        <button type="button">Book Now</button>
+    </div>
+</div>
+
+<div class="content">
+    <div class="image">
+        <img th:src="@{/images/home/event-4.png}" alt="">
+    </div>
+
+    <div class="date-rating">
+        <div class="date">
+            <span><i class="fa-solid fa-calendar"></i> 20-25 Feb</span>
+        </div>
+        <div class="rating">
+            <span>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star-half-stroke"></i> 3.5
+        </span>
+        </div>
+        
+        
+    </div>
+    <div class="event">
+        <p>Travel</p>
+        <h3>Goa Adventure Trip</h3>
+    </div>
+    <hr>
+    <div class="price-paymentbtn">
+        <p>$150</p>
+        <button type="button">Book Now</button>
+    </div>
+</div>
+  
+    </div>
+</div>
+
+</section>
+
+<!-- ==================destination======== -->
+ <section class="destination">
+    <div class="heading">
+        <h1>Trending Destination</h1>
+    </div>
+
+    <div class="cards">
+
+           <div class="content">
+                <div class="image">
+                    <img th:src="@{/images/home/home-destination-1.jpg}" alt="">
+                </div>
+
+                <div class="city-rating">
+
+                    <div class="city">
+                        <p> Bali,Indonesia</p>                      
+                    </div>
+
+                    <div class="rating">
+                        <span><i class="fa-solid fa-star"></i>4.5</span>
+                    </div>              
+                </div>
+
+                <div class="location">
+                    <span><i class="fa-solid fa-location-dot"></i> City Adventure </span>
+                </div>
+                
+                <div class="price-paymentbtn">
+                    <p>$100</p>
+                    <button type="button">Book Now</button>
+                </div>
+          </div>
+
+        <div class="content">
+                <div class="image">
+                    <img th:src="@{/images/home/home-destination-2.jpg}" alt="">
+                </div>
+
+                <div class="city-rating">
+
+                    <div class="city">
+                        <p> Tokyo,Japan</p>                      
+                    </div>
+
+                    <div class="rating">
+                        <span><i class="fa-solid fa-star"></i>4.5</span>
+                    </div>              
+                </div>
+
+                <div class="location">
+                    <span><i class="fa-solid fa-location-dot"></i> City Adventure </span>
+                </div>
+                
+                <div class="price-paymentbtn">
+                    <p>$100</p>
+                    <button type="button">Book Now</button>
+                </div>
+          </div>
+
+          <div class="content">
+                <div class="image">
+                    <img th:src="@{/images/home/home-destination-3.jpg}" alt="">
+                </div>
+
+                <div class="city-rating">
+
+                    <div class="city">
+                        <p> Swiss,Alps</p>                      
+                    </div>
+
+                    <div class="rating">
+                        <span><i class="fa-solid fa-star"></i>4.5</span>
+                    </div>              
+                </div>
+
+                <div class="location">
+                    <span><i class="fa-solid fa-location-dot"></i> Mountain Escape</span>
+                </div>
+                
+                <div class="price-paymentbtn">
+                    <p>$100</p>
+                    <button type="button">Book Now</button>
+                </div>
+          </div>
+
+    </div>
+   
+ </section>
+
+
+<!-- ========================events=========== -->
+ <section class="pop-events">
+
+    <div class="heading">
+        <h1>Trending Events</h1>
+    </div>
+
+    <div class="cards">
+
+           <div class="content">
+                <div class="image">
+                    <img th:src="@{/images/home/home-event-1.jpg}" alt="">
+                </div>
+
+                <div class="overlay">
+                <p><span><i class="fa-solid fa-star"></i>4.5</span></p>
+                <p>Epic Adventure</p>
+                <p>Moive|Adventure|18032026|6PM</p>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="image">
+                    <img th:src="@{/images/home/home-event-2.png}" alt="">
+                </div>
+
+                <div class="overlay">
+                <p><span><i class="fa-solid fa-star"></i>4.5</span></p>
+                <p>Music Festival Live</p>
+                <p>Concert|18032026|6PM</p>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="image">
+                    <img th:src="@{/images/home/home-event-3.png}" alt="">
+                </div>
+
+                <div class="overlay">
+                <p><span><i class="fa-solid fa-star"></i>4.5</span></p>
+                <p>Championship</p>
+                <p>Sports|18032026|6PM</p>
+                </div>
+            </div>
+    </div>
+ </section>
+
+
+ <!-- ===========choose============= -->
+   <section class="choose">
+        <div class="choose-image">
+            <img th:src="@{/images/home/whychoose.jpg}" alt="">
+        </div>
+
+       
+        <div class="choose-content">
+            <p class="small-title">Why Choose TicketVerse</p>
+            <p class="main-title">
+                A smarter way to book travel, events, and entertainment all in one place.
+            </p>
+
+            <div class="features">
+
+                <div class="feature">
+                    <img th:src="@{/images/home/chooseicon-1.png}" alt="">
+                    <div>
+                        <h3>All Tickets in One Place</h3>
+                        <p>Book travel, sports, movies, and events easily.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <img th:src="@{/images/home/chooseicon-2.png}" alt="">
+                    <div>
+                        <h3>Instant Booking</h3>
+                        <p>Fast and secure ticket confirmation.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <img th:src="@{/images/home/chooseicon-3.png}" alt="">
+                    <div>
+                        <h3>Best Price Guarantee</h3>
+                        <p>Find the best deals on tickets and events.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <img th:src="@{/images/home/chooseicon-4.png}" alt="">
+                    <div>
+                        <h3>24/7 Customer Support</h3>
+                        <p>We’re here to help anytime.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+</section>
+
+
+<!-- ============customers=================== -->
+    <section class="customers">
+    <h2 class="customers-title">Happy Customers</h2>
+
+    <div class="owl-carousel owl-customers">
+
+        <div class="review-card">
+            <div class="review-top">
+                <img src="/images/home/customer-1.jpeg" alt="Priya Sharma">
+                <p>"Booking my flight and concert tickets was incredibly easy with TicketVerse. Everything was in one place and the process was super fast."</p>
+            </div>
+            <div class="review-bottom">
+                <div class="review-info">
+                    <p class="name">Priya Sharma</p>
+                    <p class="location">Chennai, India</p>
+                </div>
+                <div class="quote-icon"><span><i class="fa-solid fa-quote-left"></i></span></div>
+            </div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-top">
+                <img src="/images/home/customer-1.jpeg" alt="Arjun Patel">
+                <p>"I booked IPL match tickets through TicketVerse and the experience was seamless. The interface is clean and very easy to use."</p>
+            </div>
+            <div class="review-bottom">
+                <div class="review-info">
+                    <p class="name">Arjun Patel</p>
+                    <p class="location">Ahmedabad, India</p>
+                </div>
+                <div class="quote-icon"><span><i class="fa-solid fa-quote-left"></i></span></div>
+            </div>
+        </div>
+
+   
+
+    </div>
+</section>
+
+<!-- ==================cta========== -->
+<div class="cta-1">
+<section class="cta">
+    <div class="overlay"></div>
+
+    <div class="cta-content">
+        <h1>Ready to Book Your Next Experience?</h1>
+        <p>
+            Discover flights, sports events, movies, concerts, and activities — 
+            all in one place with TicketVerse.
+        </p>
+
+        <div class="buttons">
+            <button class="btn primary">Find Tickets</button>
+            <button class="btn secondary">Explore Categories</button>
+        </div>
+    </div>
+</section>
+</div>
+
+      <!-- =============footer ======================-->
+  <div th:replace="fragments :: footer"></div>
+
+
+
+
+  <!-- scripts -->
+<!-- ===========owl carousel======== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ <script th:src="@{/js/owl.js}"></script>
+
+
+
+</body>
+</html>

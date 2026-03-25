@@ -1,0 +1,571 @@
+/* ========== GLOBAL ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-primary: #032626;
+  --color-primary-2: #008080;
+  --color-secondary: #F44336;
+  --color-secondary-2: #FF6F61;
+  --color-accent: #FFB803;
+  --color-accent-2: #FFE236;
+  --color-bg: #f5f0eb;
+  --color-text: #333;
+  --color-muted: #777;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--color-bg);
+}
+
+/* ========== BANNER ========== */
+.book-banner {
+  background: var(--color-primary);
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* ========== LAYOUT ========== */
+.booking-layout {
+  display: flex;
+  gap: 25px;
+  padding: 30px 40px;
+  align-items: flex-start;
+}
+
+/* ========== FORM BOX ========== */
+.passenger-box {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+}
+
+.box-header {
+  background: var(--color-secondary);
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+}
+
+.box-body { padding: 30px; }
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0 12px;
+  background: #fafafa;
+}
+
+.input-wrap i {
+  color: var(--color-muted);
+  margin-right: 10px;
+}
+
+.input-wrap input,
+.input-wrap select {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 20px 0 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+/* BUTTON */
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--color-secondary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background: var(--color-secondary-2);
+}
+
+/* ========== SIDE INFO ========== */
+.booking-info-box {
+  width: 300px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.info-row .label { color: var(--color-muted); }
+.info-row .value { font-weight: 600; }
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 20px;
+  background: #fff8f7;
+}
+
+.price-row .total-price {
+  color: var(--color-secondary);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* ================================================
+   PAYMENT MODAL
+================================================ */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal-box {
+    background: #fff;
+    border-radius: 16px;
+    width: 700px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 30px;
+    position: relative;
+    display: flex;
+    gap: 0;
+    min-height: 380px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+    z-index: 1;
+}
+
+/* Left — Methods */
+.modal-left {
+    width: 180px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 20px;
+}
+
+.pay-method {
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.pay-method:hover          { background: #f5f0eb; }
+.pay-method.active         { background: #e8412a; color: #fff; font-weight: 600; }
+
+/* Divider */
+.modal-divider {
+    width: 1px;
+    background: #eee;
+    margin: 0 20px;
+    flex-shrink: 0;
+}
+
+/* Right — Forms */
+.modal-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+}
+
+.pay-form {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pay-form.active { display: flex; }
+
+.pay-row {
+    display: flex;
+    gap: 15px;
+}
+
+.pay-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+}
+
+.pay-field label {
+    font-size: 13px;
+    color: #555;
+    font-weight: 500;
+}
+
+.pay-field label span { color: #e8412a; }
+
+.pay-field input,
+.pay-field select {
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background: #fafafa;
+    width: 100%;
+}
+
+.pay-field input:focus,
+.pay-field select:focus { border-color: #e8412a; }
+
+.pay-now-btn {
+    align-self: flex-end;
+    padding: 14px 40px;
+    background: #e8412a;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.pay-now-btn:hover { background: #c7321d; }
+
+/* ========== SEAT MAP ========== */
+
+/* ================================================
+   BUS SEAT MAP WRAPPER
+================================================ */
+.bus-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.seat-legend {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+    font-size: 13px;
+    color: #555;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.seat-demo {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.seat-demo.available { background: #e0e0e0; }
+.seat-demo.booked    { background: #e8412a; }
+.seat-demo.selected  { background: #1a9e8f; }
+
+/* Driver section */
+
+.bus-inner {
+    display: inline-block; /* shrink to seat width */
+}
+
+
+.bus-front {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.bus-front i {
+    font-size: 18px;
+    color: #333;
+}
+
+/* ================================================
+   SEAT MAP (reuse same structure as flight)
+================================================ */
+.bus-map .seat-map {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+}
+
+/* Rows */
+.bus-map .seat-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Header */
+.bus-map .header-row .col-label {
+    width: 36px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+}
+
+/* Row number */
+.bus-map .row-num {
+    width: 24px;
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+}
+
+/* Seats */
+.bus-map .seat {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px 6px 3px 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+/* States */
+.bus-map .seat.available {
+    background: #e0e0e0;
+    color: #555;
+}
+
+.bus-map .seat.available:hover {
+    background: #b0c4de;
+    transform: scale(1.1);
+}
+
+.bus-map .seat.booked {
+    background: #e8412a;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.bus-map .seat.selected {
+    background: #1a9e8f;
+    color: #fff;
+    border-color: #0d6e60;
+    transform: scale(1.05);
+}
+
+/* Aisle spacing */
+.bus-map .aisle {
+    width: 24px;
+}
+
+/* Selected info */
+.selected-info {
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.selected-info span {
+    color: #1a9e8f;
+    font-weight: 700;
+}
+
+.seat.selected {
+  background: var(--color-primary-2);
+}
+
+.seat.booked {
+  background: var(--color-secondary);
+}
+
+
+.info-route {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+
+.route-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.route-line span {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 400;
+}
+.route-times {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* ================================================= */
+/* ================= RESPONSIVE ==================== */
+/* ================================================= */
+
+/* 🔹 EXTRA SMALL (Mobile <576px) */
+@media (max-width: 575px) {
+
+  .booking-layout {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .booking-info-box {
+    width: 100%;
+  }
+
+  .modal-box {
+    flex-direction: column;
+  }
+
+  .modal-left {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .pay-row {
+    flex-direction: column;
+  }
+
+  .bus-map {
+    max-width: 100%;
+  }
+}
+
+/* 🔹 SMALL DEVICES (576px - 768px) */
+@media (max-width: 768px) {
+
+  .booking-layout {
+    flex-direction: column;
+  }
+
+  .booking-info-box {
+    width: 100%;
+  }
+
+  .modal-box {
+    flex-direction: column;
+  }
+}
+
+/* 🔹 MEDIUM DEVICES (768px - 992px) */
+@media (max-width: 992px) {
+
+  .booking-layout {
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .booking-info-box {
+    width: 250px;
+  }
+}
+
+/* 🔹 LARGE DEVICES (992px - 1200px) */
+@media (max-width: 1200px) {
+
+  .booking-layout {
+    padding: 25px;
+  }
+}
+
+/* 🔹 EXTRA LARGE (>1200px) */
+@media (min-width: 1200px) {
+
+  
+}

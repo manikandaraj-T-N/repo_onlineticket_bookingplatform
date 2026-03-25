@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/hotelbookingdetail.css}" />
+
+    
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div th:replace="~{fragments :: booking-menus}"></div>
+
+<div class="detail-card" style="margin-top:30px;">
+    <div class="detail-top">
+        <h2><i class="fa-solid fa-hotel"></i> Hotel Booking Details</h2>
+        <span th:class="${booking.bookingStatus == 'Confirmed'} ? 'status-badge confirmed' : 'status-badge cancelled'"
+              th:text="${booking.bookingStatus}"></span>
+    </div>
+
+    <div class="detail-body">
+        <div class="ref-section">
+            <div class="ref-item">
+                <div class="ref-label">Booking Reference</div>
+                <div class="ref-value">HTL-<span th:text="${booking.id}"></span></div>
+            </div>
+            <div class="ref-item">
+                <div class="ref-label">Booking Date</div>
+                <div class="ref-value" th:text="${booking.bookingDate}"></div>
+            </div>
+            <div class="ref-item">
+                <div class="ref-label">Check In</div>
+                <div class="ref-value" th:text="${booking.checkIn}"></div>
+            </div>
+            <div class="ref-item">
+                <div class="ref-label">Check Out</div>
+                <div class="ref-value" th:text="${booking.checkOut}"></div>
+            </div>
+        </div>
+
+        <img th:src="@{'/images/homehotels/' + ${hotel.image}}" class="hotel-banner" alt="">
+
+        <p class="section-title">Hotel Info</p>
+        <div class="info-grid">
+            <div class="info-box">
+                <div class="info-label">Hotel</div>
+                <div class="info-value" th:text="${hotel.name}"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Category</div>
+                <div class="info-value" th:text="${hotel.category}"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">City</div>
+                <div class="info-value" th:text="${hotel.city}"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Nights</div>
+                <div class="info-value" th:text="${booking.nights}"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Guests</div>
+                <div class="info-value" th:text="${booking.guests}"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Price Per Night</div>
+                <div class="info-value">₹<span th:text="${hotel.pricePerNight}"></span></div>
+            </div>
+        </div>
+
+        <div class="price-section">
+            <span class="price-label">Total Amount Paid</span>
+            <span class="price-value">₹<span th:text="${booking.totalPrice}"></span></span>
+        </div>
+
+        <div class="btn-row">
+            <a href="/mybookings" class="btn-back">← Back to My Bookings</a>
+            <a th:href="@{/hotelbooking/download/{id}(id=${booking.id})}" class="btn-download">
+                <i class="fa-solid fa-download"></i> Download Booking
+            </a>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments :: footer}"></div>
+</body>
+</html>

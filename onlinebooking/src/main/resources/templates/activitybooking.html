@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Activity Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+     <link rel="stylesheet" th:href="@{/css/login.css}" />
+       <link rel="stylesheet" th:href="@{/css/activitybooking.css}" />
+</head>
+<body>
+
+    <!-- navbar -->
+        <div th:replace="fragments :: navbar"></div>
+
+     <div th:replace="fragments :: booking-menus"></div>
+
+
+
+<div class="book-banner">Book Activity</div>
+
+<div class="booking-layout">
+
+    <!-- PASSENGER FORM -->
+    <div class="passenger-box">
+        <div class="box-header">Participant Info</div>
+        <div class="box-body">
+            <form th:action="@{/activitybooking/confirm}" method="post">
+
+                <input type="hidden" name="activityId" th:value="${activity.id}">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" name="firstName" placeholder="First Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" name="lastName" placeholder="Last Name" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="tel" name="phone" placeholder="Phone Number" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Participants</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-users"></i>
+                            <input type="number" name="participants" min="1" max="10" value="1" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Confirm Booking →</button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- ACTIVITY INFO -->
+    <div class="booking-info-box">
+        <div class="box-header">Activity Info</div>
+        <img th:src="@{'/images/homeactivities/' + ${activity.image}}" class="act-info-img" alt="">
+        <div class="info-body">
+            <h3 th:text="${activity.name}"></h3>
+
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-location-dot"></i> City</span>
+                <span class="value" th:text="${activity.city}"></span>
+            </div>
+            <div class="info-row">
+                <span class="label">Category</span>
+                <span class="value" th:text="${activity.category}"></span>
+            </div>
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-star" style="color:#f5a623"></i> Rating</span>
+                <span class="value" th:text="${activity.rating}"></span>
+            </div>
+
+            <div class="price-row">
+                <span class="total-label">Price per person</span>
+                <span class="total-price">₹<span th:text="${activity.price}"></span></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div th:replace="fragments :: footer"></div>
+
+<!-- Payment Modal -->
+<div class="modal-overlay" id="paymentModal">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closePayment()">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </button>
+
+        <div class="modal-left">
+            <div class="pay-method active" onclick="switchMethod(this, 'credit')">Credit Card</div>
+            <div class="pay-method" onclick="switchMethod(this, 'netbanking')">Net Banking</div>
+            <div class="pay-method" onclick="switchMethod(this, 'upi')">UPI</div>
+        </div>
+
+        <div class="modal-divider"></div>
+
+        <div class="modal-right">
+            <!-- Credit Card -->
+            <div class="pay-form active" id="credit">
+                <div class="pay-field">
+                    <label>Card Number<span>*</span></label>
+                    <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" id="cardNumber">
+                </div>
+                <div class="pay-row">
+                    <div class="pay-field">
+                        <label>Expiry Date<span>*</span></label>
+                        <input type="text" placeholder="MM/YYYY" maxlength="7" id="expiry">
+                    </div>
+                    <div class="pay-field">
+                        <label>CVV<span>*</span></label>
+                        <input type="text" placeholder="000" maxlength="3" id="cvv">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Net Banking -->
+            <div class="pay-form" id="netbanking">
+                <div class="pay-field">
+                    <label>Select Bank<span>*</span></label>
+                    <select>
+                        <option value="" disabled selected>Choose your bank</option>
+                        <option>SBI</option>
+                        <option>HDFC</option>
+                        <option>ICICI</option>
+                        <option>Axis Bank</option>
+                        <option>Kotak</option>
+                    </select>
+                </div>
+                <div class="pay-field">
+                    <label>User ID<span>*</span></label>
+                    <input type="text" placeholder="Enter Net Banking User ID">
+                </div>
+            </div>
+
+            <!-- UPI -->
+            <div class="pay-form" id="upi">
+                <div class="pay-field">
+                    <label>UPI ID<span>*</span></label>
+                    <input type="text" placeholder="yourname@upi">
+                </div>
+            </div>
+
+            <button class="pay-now-btn" onclick="submitPayment()">Pay Now</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openPayment() {
+    const form = document.querySelector('form');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    document.getElementById('paymentModal').classList.add('open');
+}
+
+function closePayment() {
+    document.getElementById('paymentModal').classList.remove('open');
+}
+
+function switchMethod(el, id) {
+    document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('active'));
+    document.querySelectorAll('.pay-form').forEach(f => f.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById(id).classList.add('active');
+}
+
+function submitPayment() {
+    const activeForm = document.querySelector('.pay-form.active');
+    const inputs = activeForm.querySelectorAll('input, select');
+    let valid = true;
+    inputs.forEach(input => {
+        if (input.value.trim() === '') {
+            input.style.border = '1.5px solid red';
+            valid = false;
+        } else {
+            input.style.border = '1px solid #ddd';
+        }
+    });
+    if (!valid) return;
+    document.querySelector('form').submit();
+}
+</script>
+
+</body>
+</html>

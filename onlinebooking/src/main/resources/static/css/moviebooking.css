@@ -1,0 +1,377 @@
+
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+--color-primary: #032626;
+--color-primary-2: #008080;
+--color-secondary: #F44336;
+--color-secondary-2: #FF6F61;
+--color-accent: #FFB803;
+--color-accent-2: #FFE236;
+}
+
+@font-face {
+font-family: "Inter";
+src: url("../assets/fonts/Inter/Inter-VariableFont_opsz,wght.woff2") format("woff2");
+font-weight: 100 900;
+font-style: normal;
+}
+
+@font-face {
+font-family: "Inter";
+src: url("../assets/fonts/Inter/Inter-Italic-VariableFont_opsz,wght.woff2") format("woff2");
+font-weight: 100 900;
+font-style: italic;
+}
+
+
+.body {
+font-family: 'Inter';
+background-color: var(--color-primary);
+
+margin: 0;
+padding: 0;
+}
+
+a{
+text-decoration: none;
+cursor: pointer;
+}
+
+.book-banner {
+background: #032626;
+padding: 30px;
+text-align: center;
+color: white;
+font-size: 24px;
+font-weight: 600;
+}
+
+.booking-layout {
+display: flex;
+gap: 25px;
+padding: 30px 40px;
+align-items: flex-start;
+}
+
+.passenger-box {
+flex: 1;
+background: #fff;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+}
+
+.box-header {
+background: #e8412a;
+padding: 20px;
+text-align: center;
+color: white;
+font-size: 20px;
+font-weight: 600;
+}
+
+.box-body { padding: 30px; }
+
+.form-row {
+display: flex;
+gap: 15px;
+margin-bottom: 20px;
+}
+
+.form-group {
+flex: 1;
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.form-group label {
+font-size: 13px;
+color: #777;
+font-weight: 500;
+}
+
+.input-wrap {
+display: flex;
+align-items: center;
+border: 1px solid #e0e0e0;
+border-radius: 8px;
+padding: 0 12px;
+background: #fafafa;
+}
+
+.input-wrap i {
+color: #777;
+margin-right: 10px;
+font-size: 15px;
+}
+
+.input-wrap input,
+.input-wrap select {
+flex: 1;
+padding: 12px 0;
+border: none;
+background: transparent;
+font-size: 14px;
+outline: none;
+}
+
+.section-title {
+font-size: 15px;
+font-weight: 600;
+color: #333;
+margin: 20px 0 15px;
+padding-bottom: 8px;
+border-bottom: 1px solid #eee;
+}
+
+.submit-btn {
+width: 100%;
+padding: 14px;
+background: #e8412a;
+color: #fff;
+border: none;
+border-radius: 8px;
+font-size: 16px;
+font-weight: 600;
+cursor: pointer;
+margin-top: 10px;
+}
+
+.submit-btn:hover { background: #c7321d; }
+
+/* Movie Info Box */
+.booking-info-box {
+width: 280px;
+background: #fff;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+height: fit-content;
+}
+
+.movie-info-img {
+width: 100%;
+height: 360px;
+object-fit: cover;
+}
+
+.info-body { padding: 20px; }
+.info-body h3 { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+
+.info-row {
+display: flex;
+justify-content: space-between;
+padding: 10px 0;
+border-bottom: 1px solid #eee;
+font-size: 14px;
+}
+
+.info-row .label { color: #777; }
+.info-row .value { font-weight: 600; }
+
+.price-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 16px 0 0;
+}
+
+.price-row .total-label { font-size: 15px; font-weight: 600; }
+.price-row .total-price { font-size: 22px; font-weight: 800; color: #e8412a; }
+
+/* Modal */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+.modal-overlay.open { display: flex; }
+.modal-box { background: #fff; border-radius: 16px; width: 700px; max-width: 95vw; padding: 30px; position: relative; display: flex; min-height: 380px; }
+.modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 28px; cursor: pointer; color: #333; }
+.modal-left { width: 180px; display: flex; flex-direction: column; gap: 10px; padding-right: 20px; }
+.pay-method { padding: 12px 18px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 500; color: #333; transition: background 0.2s; }
+.pay-method:hover { background: #f5f0eb; }
+.pay-method.active { background: #e8412a; color: #fff; font-weight: 600; }
+.modal-divider { width: 1px; background: #eee; margin: 0 20px; }
+.modal-right { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.pay-form { display: none; flex-direction: column; gap: 20px; }
+.pay-form.active { display: flex; }
+.pay-row { display: flex; gap: 15px; }
+.pay-field { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.pay-field label { font-size: 13px; color: #555; font-weight: 500; }
+.pay-field label span { color: #e8412a; }
+.pay-field input, .pay-field select { padding: 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; background: #fafafa; }
+.pay-now-btn { align-self: flex-end; padding: 14px 40px; background: #e8412a; color: #fff; border: none; border-radius: 50px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 20px; }
+.pay-now-btn:hover { background: #c7321d; }
+
+
+/* ================= RESPONSIVE ================= */
+
+/* XL (≥1200px) */
+@media (min-width: 1200px) {
+  .booking-layout {
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .modal-box {
+    width: 800px;
+  }
+}
+
+/* LG (≤1199px) */
+@media (max-width: 1199px) {
+  .booking-layout {
+    padding: 25px;
+    gap: 20px;
+  }
+
+  .booking-info-box {
+    width: 260px;
+  }
+
+  .movie-info-img {
+    height: 320px;
+  }
+}
+
+/* MD (≤991px) */
+@media (max-width: 991px) {
+
+  /* LAYOUT STACK */
+  .booking-layout {
+    flex-direction: column;
+  }
+
+  .booking-info-box {
+    width: 100%;
+  }
+
+  /* FORM */
+  .form-row {
+    flex-direction: column;
+  }
+
+  /* MODAL */
+  .modal-box {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .modal-left {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-right: 0;
+  }
+
+  .pay-method {
+    flex: 1;
+    text-align: center;
+  }
+
+  .modal-divider {
+    display: none;
+  }
+}
+
+/* SM (≤767px) */
+@media (max-width: 767px) {
+
+  /* BANNER */
+  .book-banner {
+    font-size: 20px;
+    padding: 20px;
+  }
+
+  /* BOX */
+  .box-body {
+    padding: 20px;
+  }
+
+  .box-header {
+    font-size: 18px;
+    padding: 15px;
+  }
+
+  /* MOVIE IMAGE */
+  .movie-info-img {
+    height: 260px;
+  }
+
+  /* MODAL */
+  .modal-box {
+    padding: 20px;
+  }
+
+  .pay-row {
+    flex-direction: column;
+  }
+
+  .pay-now-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* XS (≤575px) */
+@media (max-width: 575px) {
+
+  /* LAYOUT */
+  .booking-layout {
+    padding: 15px;
+  }
+
+  /* BANNER */
+  .book-banner {
+    font-size: 18px;
+    padding: 15px;
+  }
+
+  /* TEXT */
+  .section-title {
+    font-size: 14px;
+  }
+
+  .input-wrap input,
+  .input-wrap select {
+    font-size: 13px;
+  }
+
+  /* MOVIE INFO */
+  .info-body h3 {
+    font-size: 15px;
+  }
+
+  .info-row {
+    font-size: 13px;
+  }
+
+  .price-row .total-price {
+    font-size: 18px;
+  }
+
+  /* IMAGE */
+  .movie-info-img {
+    height: 220px;
+  }
+
+  /* MODAL */
+  .modal-box {
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .modal-close {
+    font-size: 24px;
+  }
+
+  .pay-field input,
+  .pay-field select {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .pay-now-btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+}

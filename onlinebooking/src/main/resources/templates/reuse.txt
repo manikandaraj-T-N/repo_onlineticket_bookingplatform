@@ -1,0 +1,229 @@
+<!-- <div class="availables" id="flightList">
+
+        <div class="card" data-stop="Non Stop" data-airline="IndiGo" data-price="5499" data-arrival="morning"  data-time="morning">
+
+            <div class="left">
+                 <div class="heading-icon">
+                <img th:src="@{/images/homeflight/indigoicon.png}" alt="">
+
+            <div class="title">
+                 <h3>IndiGo</h3>
+                <p>Non Stop</p>
+            </div>
+           
+            </div>
+            
+            <div class="dep-arri">
+                <div class="dep">
+                    <p class="title">Depature</p>
+                    <p class="time">08:00 AM</p>
+                     <p class="place">Chennai(MAA) </p>
+                    
+                </div>
+
+                <div class="arri">
+                    <p class="title">Arrival</p>
+                    <p class="time">12:45 PM</p>
+                     <p class="place">Delhi(DEL) </p>
+                    
+                </div>
+            </div>
+            </div>
+
+            <div class="right">
+            <p><span><i class="fa-regular fa-alarm-clock"></i> 2h 45m</span></p>
+            <p class="price">₹5,499</p>
+            <button type="submit">Book Now</button>
+            </div>
+            
+        </div>
+
+
+        <div class="card" data-stop="Non Stop" data-airline="Air India" data-price="5850" data-arrival="morning"  data-time="morning">
+            <div class="left">
+                <div class="heading-icon">
+                    <img th:src="@{/images/homeflight/airindia.png}" alt="">
+                    <div class="title">
+                        <h3>Air India</h3>
+                        <p>Non Stop</p>
+                    </div>
+                </div>
+
+                <div class="dep-arri">
+                    <div class="dep">
+                        <p class="title">Departure</p>
+                        <p class="time">09:45 AM</p>
+                        <p class="place">Chennai (MAA)</p>
+                    </div>
+
+                    <div class="arri">
+                        <p class="title">Arrival</p>
+                        <p class="time">11:15 AM</p>
+                        <p class="place">Mumbai (BOM)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right">
+                <p><i class="fa-regular fa-clock"></i> 2h 20m</p>
+                <p class="price">₹5,850</p>
+                <button>Book Now</button>
+            </div>
+        </div>
+
+
+        <div class="card" data-stop="1 Stop" data-airline="Vistara" data-price="7200" data-arrival="afternoon"  data-time="afternoon">
+            <div class="left">
+                <div class="heading-icon">
+                    <img th:src="@{/images/homeflight/vistara.png}" alt="">
+                    <div class="title">
+                        <h3>Vistara</h3>
+                        <p>1 Stop</p>
+                    </div>
+                </div>
+
+                <div class="dep-arri">
+                    <div class="dep">
+                        <p class="title">Departure</p>
+                        <p class="time">02:00 PM</p>
+                        <p class="place">Chennai (MAA)</p>
+                    </div>
+
+                    <div class="arri">
+                        <p class="title">Arrival</p>
+                        <p class="time">05:00 PM</p>
+                        <p class="place">Bangalore (BLR)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right">
+                <p><i class="fa-regular fa-clock"></i> 3h 00m</p>
+                <p class="price">₹7,200</p>
+                <button>Book Now</button>
+            </div>
+        </div>
+
+
+        <div class="card" data-stop="Non Stop" data-airline="SpiceJet" data-price="4999" data-arrival="morning"  data-time="morning">
+            <div class="left">
+                <div class="heading-icon">
+                    <img th:src="@{/images/homeflight/spicejet.png}" alt="">
+                    <div class="title">
+                        <h3>SpiceJet</h3>
+                        <p>Non Stop</p>
+                    </div>
+                </div>
+
+                <div class="dep-arri">
+                    <div class="dep">
+                        <p class="title">Departure</p>
+                        <p class="time">06:30 AM</p>
+                        <p class="place">Chennai (MAA)</p>
+                    </div>
+
+                    <div class="arri">
+                        <p class="title">Arrival</p>
+                        <p class="time">09:00 AM</p>
+                        <p class="place">Hyderabad (HYD)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right">
+                <p><i class="fa-regular fa-clock"></i> 2h 30m</p>
+                <p class="price">₹4,999</p>
+                <button>Book Now</button>
+            </div>
+        </div>
+
+
+        <div class="card" data-stop="Non Stop" data-airline="Akasa Air " data-price="8100" data-arrival="afternoon"  data-time="afternoon">
+            <div class="left">
+                <div class="heading-icon">
+                    <img th:src="@{/images/homeflight/akasa.png}" alt="">
+                    <div class="title">
+                        <h3>Akasa Air</h3>
+                        <p>Non Stop</p>
+                    </div>
+                </div>
+
+                <div class="dep-arri">
+                    <div class="dep">
+                        <p class="title">Departure</p>
+                        <p class="time">03:15 PM</p>
+                        <p class="place">Chennai (MAA)</p>
+                    </div>
+
+                    <div class="arri">
+                        <p class="title">Arrival</p>
+                        <p class="time">06:00 PM</p>
+                        <p class="place">Delhi (DEL)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right">
+                <p><i class="fa-regular fa-clock"></i> 2h 45m</p>
+                <p class="price">₹8,100</p>
+                <button>Book Now</button>
+            </div>
+        </div>
+
+
+    </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // @GetMapping("/mybookings")
+// public String myBookings(Model model) {
+//     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//     String loggedInEmail = auth.getName();
+
+//     // get user's actual name from DB using email
+//     User user = userRepository.findByEmail(loggedInEmail)
+//             .orElseThrow(() -> new RuntimeException("User not found"));
+
+//     // get bookings by email — unique per user
+//     List<FlightBooking> bookings = bookingRepository.findByEmail(loggedInEmail);
+
+
+//     List<FlightBooking> flightBookings = flightBookingRepository.findByEmail(email);
+//     List<ActivityBooking> activityBookings = activityBookingRepository.findByEmail(email);
+//      model.addAttribute("totalBookings", flightBookings.size() + activityBookings.size());
+
+//     model.addAttribute("flightBookings", flightBookings);
+//     model.addAttribute("activityBookings", activityBookings);
+
+//     List<Map<String, Object>> bookingDetails = new ArrayList<>();
+//     for (FlightBooking b : bookings) {
+//         Map<String, Object> item = new HashMap<>();
+//         item.put("booking", b);
+//         item.put("flight", flightService.getFlightById(b.getFlightId()));
+//         bookingDetails.add(item);
+//     }
+
+//     long confirmed = bookings.stream()
+//             .filter(b -> "Confirmed".equals(b.getBookingStatus())).count();
+//     long pending = bookings.stream()
+//             .filter(b -> "Pending".equals(b.getBookingStatus())).count();
+
+//     model.addAttribute("username", user.getName());  
+//     model.addAttribute("bookingDetails", bookingDetails);
+//     model.addAttribute("totalBookings", bookings.size());
+//     model.addAttribute("confirmed", confirmed);
+//     model.addAttribute("pending", pending);
+
+//     return "mybookings";
+// }
+

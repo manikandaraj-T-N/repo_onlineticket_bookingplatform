@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home|Flight Booking</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/homeflight.css}" />
+
+
+       <!-- ===========owl carousel css======== -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    </head>
+
+    <body>
+        <!-- navbar -->
+        <div th:replace="fragments :: navbar"></div>
+
+     <div th:replace="fragments :: booking-menus"></div>
+
+
+          <!-- ============banner=========== -->
+<section class="banner">
+
+    <div class="flight-img">
+        <img th:src="@{/images/homeflight/banner-flightsea.png}" alt="">
+    </div>
+
+    <div class="overlay-text">
+        <h2>Search Flights</h2>
+        <p>Find the best Flights at the best price</p>
+    </div>
+
+        <!-- FORM-->
+        <div class="form">
+    <form action="/flights" method="get">
+
+        <input type="text" name="from" placeholder="From" required>
+        <input type="text" name="to" placeholder="To" required>
+        <input type="date" name="date" required placeholder="date">
+
+        <button type="submit">Search Flight</button>
+
+    </form>
+</div>
+
+</section>
+
+<!-- ===========================filters& availables======================================== -->
+<section class="booking">
+    <!-- filters -->
+        <form action="/flights" method="get">
+            <div class="filters">
+            <div class="filter-header">
+                <h2>Filters</h2>
+            </div>
+
+            <div class="filter-body">
+
+                <!-- Price Range -->
+    <div class="filter-group">
+    <div class="filter-label" onclick="toggleFilter('price')">
+        <span>Price Range</span>
+        <i class="fa-solid fa-chevron-up" id="icon-price"></i>
+    </div>
+    <div class="filter-content" id="price">
+        <input type="range" id="maxPrice" min="4500" max="8000" value="8000" title="price-slidebar">
+
+        
+        <input type="hidden" id="maxPriceHidden" name="maxPrice" value="8000">
+
+
+        <div class="range-labels">
+            <span>₹4500</span>
+            <span>₹<span id="maxVal">8,000</span></span>
+        </div>
+    </div>
+</div>
+
+                <!-- Departure Time -->
+                <div class="filter-group">
+                    <div class="filter-label" onclick="toggleFilter('departure')">
+                        <span>Departure Time</span>
+                        <i class="fa-solid fa-chevron-down" id="icon-departure"></i>
+                    </div>
+                    <div class="filter-content hidden" id="departure">
+                        <label><input type="checkbox" name="departure" value="morning"> Morning (6AM - 12PM)</label>
+                        <label><input type="checkbox" name="departure" value="afternoon"> Afternoon (12PM - 6PM)</label>
+                        <label><input type="checkbox" name="departure" value="evening"> Evening (6PM - 12AM)</label>
+                    </div>
+                </div>
+
+                <!-- Arrival Time -->
+                <div class="filter-group">
+                    <div class="filter-label" onclick="toggleFilter('arrival')">
+                        <span>Arrival Time</span>
+                        <i class="fa-solid fa-chevron-down" id="icon-arrival"></i>
+                    </div>
+                    <div class="filter-content hidden" id="arrival">
+                        <label><input type="checkbox" name="arrival" value="morning"> Morning (6AM - 12PM)</label>
+                        <label><input type="checkbox" name="arrival" value="afternoon"> Afternoon (12PM - 6PM)</label>
+                        <label><input type="checkbox" name="arrival" value="evening"> Evening (6PM - 12AM)</label>
+                    </div>
+                </div>
+
+                <!-- Airline -->
+                <div class="filter-group">
+                    <div class="filter-label" onclick="toggleFilter('airline')">
+                        <span>Airline</span>
+                        <i class="fa-solid fa-chevron-down" id="icon-airline"></i>
+                    </div>
+                    <div class="filter-content hidden" id="airline">
+                        <label><input type="checkbox" name="airline" value="IndiGo"> IndiGo</label>
+                        <label><input type="checkbox" name="airline" value="Air India"> Air India</label>
+                        <label><input type="checkbox" name="airline"value="Vistara"> Vistara</label>
+                        <label><input type="checkbox" name="airline" value="SpiceJet"> SpiceJet</label>
+                        <label><input type="checkbox" name="airline" value="Akasa Air"> Akasa Air</label>
+                    </div>
+                </div>
+
+                <!-- Stop -->
+                <div class="filter-group">
+                    <div class="filter-label" onclick="toggleFilter('stop')">
+                        <span>Stop</span>
+                        <i class="fa-solid fa-chevron-down" id="icon-stop"></i>
+                    </div>
+                    <div class="filter-content hidden" id="stop">
+                       
+                    <label><input type="checkbox" name="stop" value="Non Stop"> Non Stop</label>
+                    <label><input type="checkbox" name="stop" value="1 Stop"> 1 Stop</label>
+            </div>
+                </div>
+
+                <input type="hidden" name="from" th:value="${param.from}">
+                <input type="hidden" name="to" th:value="${param.to}">
+                <input type="hidden" name="date" th:value="${param.date}">
+
+            </div>
+            </div>
+
+            <button type="submit" class="apply-btn">Apply Filters</button>
+        </form>
+
+    <!-- flights -->
+    <div class="availables">
+<!-- 
+    <h2 th:if="${param.from != null and param.from != '' 
+         and param.to != null and param.to != '' 
+         and param.date != null and param.date != ''}">
+    Flights from
+    <span th:text="${param.from}"></span>
+    to
+    <span th:text="${param.to}"></span>
+    on
+    <span th:text="${param.date}"></span>
+</h2> -->
+
+        <div class="card" th:each="flight : ${flights}">
+
+            <div class="left">
+
+                <div class="heading-icon">
+                    <img th:src="@{'/images/homeflight/' + ${flight.image}}" alt="">
+
+                    <div class="title">
+                        <h3 th:text="${flight.airline}"></h3>
+                        <p th:text="${flight.stop}"></p>
+                    </div>
+                </div>
+
+                <div class="dep-arri">
+                    <div class="dep">
+                        <p class="title">Departure</p>
+                        <p class="time" th:text="${flight.departureTime}"></p>
+                        <p class="place" th:text="${flight.fromPlace}"></p>
+                    </div>
+
+                    <div class="arri">
+                        <p class="title">Arrival</p>
+                        <p class="time" th:text="${flight.arrivalTime}"></p>
+                        <p class="place" th:text="${flight.toPlace}"></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="right">
+                <p class="price">₹<span th:text="${flight.price}"></span></p>
+                <button><a th:href="@{/booking/{id}(id=${flight.id})}" class="book-btn">Book Now</a></button>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================popular routes========== -->
+ <section class="popular-routes">
+    <h2 class="routes-title">Popular Routes</h2>
+
+    <div class="routes-banner">
+        <a href="/flights?from=Chennai&to=Bangalore" class="route-pill">Chennai → Bangalore</a>
+        <a href="/flights?from=Mumbai&to=Delhi" class="route-pill">Mumbai → Delhi</a>
+        <a href="/flights?from=Hyderabad&to=Goa" class="route-pill">Hyderabad → Goa</a>
+        <a href="/flights?from=Delhi&to=Kolkata" class="route-pill">Delhi → Kolkata</a>
+    </div>
+</section>
+
+<!-- ==========================airlines partneres=========== -->
+ <section class="airline-partners">
+    <h2 class="airlines-title">Airlines We Work With</h2>
+
+    <div class="owl-carousel owl-airlines">
+        <div class="airline-item">
+            <img th:src="@{/images/homeflight/akasa.png}" alt="Akasa Air">
+        </div>
+        <div class="airline-item">
+            <img th:src="@{/images/homeflight/airindia.png}" alt="Air India">
+        </div>
+        <div class="airline-item">
+            <img th:src="@{/images/homeflight/spicejet.png}" alt="SpiceJet">
+        </div>
+        <div class="airline-item">
+            <img th:src="@{/images/homeflight/vistara.png}" alt="Vistara">
+        </div>
+        <div class="airline-item">
+            <img th:src="@{/images/homeflight/indigoicon.png}" alt="IndiGo">
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================cta========== -->
+<div class="cta-1">
+<section class="cta">
+    <div class="overlay"></div>
+
+    <div class="cta-content">
+        <p class="heading">Ready to Book Your Flight?</p>
+        <p>
+           Search  thousands of flights and find the best deal for your journey.
+        </p>
+
+        <div class="buttons">
+            <button class="btn primary">Search Flights</button>
+          
+        </div>
+    </div>
+</section>
+</div>
+
+           <!-- =============footer ======================-->
+        <div th:replace="fragments :: footer"></div>
+
+
+          <!-- ===================scripts============ -->
+                 <!-- =owl carousel= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ <script th:src="@{/js/owl.js}"></script>
+
+<!-- ========filtersandbooking=====script -->
+
+<script>
+const maxRange = document.getElementById("maxPrice");
+const maxVal = document.getElementById("maxVal");
+const maxHidden = document.getElementById("maxPriceHidden");
+
+
+
+maxRange.addEventListener("input", () => {
+    maxVal.innerText = parseInt(maxRange.value).toLocaleString();
+    maxHidden.value = maxRange.value;
+    filterFlights();
+});
+
+function filterFlights() {
+    const max = parseInt(maxRange.value);
+
+    const depChecked = getChecked('departure');
+    const arrChecked = getChecked('arrival');
+    const airlineChecked = getChecked('airline');
+    const stopChecked = getChecked('stop');
+
+    document.querySelectorAll('.card').forEach(card => {
+        const price = parseInt(card.dataset.price);
+        const depTime = card.dataset.time;
+        const arrTime = card.dataset.arrival;
+        const airline = card.dataset.airline?.trim();
+        const stop = card.dataset.stop?.trim();
+
+        let show = true;
+
+       
+        if (price > max) show = false;
+
+        if (depChecked.length && !depChecked.includes(depTime)) {
+            show = false;
+        }
+
+    
+        if (arrChecked.length && !arrChecked.includes(arrTime)) {
+            show = false;
+        }
+
+      
+        if (airlineChecked.length && !airlineChecked.includes(airline)) {
+            show = false;
+        }
+
+       
+        if (stopChecked.length && !stopChecked.includes(stop)) {
+            show = false;
+        }
+
+        card.style.display = show ? 'flex' : 'none';
+    });
+}
+
+function getChecked(id) {
+    return Array.from(
+        document.querySelectorAll(`#${id} input[type="checkbox"]:checked`)
+    ).map(cb => cb.value.trim());
+}
+
+
+document.querySelectorAll('.filter-content input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', filterFlights);
+});
+
+function toggleFilter(id) {
+    const content = document.getElementById(id);
+    const icon = document.getElementById('icon-' + id);
+    content.classList.toggle('hidden');
+    icon.classList.toggle('fa-chevron-down');
+    icon.classList.toggle('fa-chevron-up');
+}
+
+window.onload = filterFlights;
+</script>
+
+</body>
+    </html>

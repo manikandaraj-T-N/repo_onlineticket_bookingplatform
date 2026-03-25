@@ -1,0 +1,273 @@
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================= VARIABLES ================= */
+:root {
+  --color-primary: #032626;
+  --color-primary-2: #008080;
+  --color-secondary: #F44336;
+  --color-secondary-2: #FF6F61;
+  --color-accent: #FFB803;
+  --color-accent-2: #FFE236;
+
+  --color-purple: #8e44ad; /* used in header */
+}
+
+/* ================= FONT ================= */
+@font-face {
+  font-family: 'Inter';
+  src: url('/Inter/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f5f0eb;
+  padding: 40px 20px;
+}
+
+/* ================= CARD ================= */
+.detail-card {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  overflow: hidden;
+  margin-bottom: 5% !important;
+}
+
+/* ================= HEADER ================= */
+.detail-top {
+  background: var(--color-purple);
+  padding: 25px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+}
+
+.detail-top h2 {
+  font-size: 20px;
+}
+
+/* ================= STATUS ================= */
+.status-badge {
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-badge.confirmed {
+  background: #fff;
+  color: var(--color-purple);
+}
+
+.status-badge.cancelled {
+  background: #999;
+  color: #fff;
+}
+
+/* ================= BODY ================= */
+.detail-body {
+  padding: 30px;
+}
+
+/* ================= REF SECTION ================= */
+.ref-section {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 25px;
+}
+
+.ref-item {
+  text-align: center;
+}
+
+.ref-item .ref-label {
+  font-size: 12px;
+  color: #999;
+}
+
+.ref-item .ref-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* ================= SECTION TITLE ================= */
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+/* ================= IMAGE ================= */
+.event-banner {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+/* ================= GRID ================= */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.info-box {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.info-box .info-label {
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+}
+
+.info-box .info-value {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ================= PRICE ================= */
+.price-section {
+  background: #fff8f7;
+  border-radius: 12px;
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.price-label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.price-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--color-secondary);
+}
+
+/* ================= BUTTONS ================= */
+.btn-row {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-back {
+  flex: 1;
+  padding: 13px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+}
+
+.btn-download {
+  flex: 1;
+  padding: 13px;
+  background: var(--color-secondary);
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  transition: 0.3s;
+}
+
+.btn-download:hover {
+  background: var(--color-secondary-2);
+  transform: translateY(-1px);
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* 📱 MOBILE (<576px) */
+@media (max-width: 575px) {
+
+  body {
+    padding: 20px 10px;
+  }
+
+  .detail-top {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .ref-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .price-section {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .btn-row {
+    flex-direction: column;
+  }
+
+  .event-banner {
+    height: 160px;
+  }
+}
+
+/* 📱 SMALL (576px–767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .btn-row {
+    flex-direction: column;
+  }
+}
+
+/* 💻 TABLET (768px–991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 🖥️ LARGE (1200px+) */
+@media (min-width: 1200px) {
+
+  .detail-card {
+    max-width: 800px;
+  }
+}

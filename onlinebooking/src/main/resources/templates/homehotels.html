@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home|Hotel Booking</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/homehotels.css}" />
+
+
+       <!-- ===========owl carousel css======== -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    </head>
+
+    <body>
+        <!-- navbar -->
+        <div th:replace="fragments :: navbar"></div>
+
+     <div th:replace="fragments :: booking-menus"></div>
+
+
+
+           <!-- ============banner=========== -->
+<section class="banner">
+
+    <div class="banner-img">
+        <img th:src="@{/images/homehotels/hotel-banner.png}" alt="">
+    </div>
+
+    <div class="overlay-text">
+         <h1>Find Your Perfect Stay</h1>
+        <p>Discover hotels, resorts and unique stays for every budget</p>
+    </div>
+
+        <!-- FORM-->
+        <div class="form">
+    <form action="/flights" method="get">
+
+        <input type="text" name="from" placeholder="Check In" required>
+        <input type="text" name="to" placeholder="Check out" required>
+      
+
+        <button type="submit">Search </button>
+
+    </form>
+</div>
+
+</section>
+
+
+
+<!-- TABS + CARDS -->
+<div class="hotel-section">
+
+    <!-- TABS -->
+    <div class="hotel-tabs">
+        <button class="hotel-tab-btn active"
+                onclick="filterHotelTab('Beach Vacations', this)">Beach Vacations</button>
+        <button class="hotel-tab-btn"
+                onclick="filterHotelTab('Weekend Gateways', this)">Weekend Gateways</button>
+        <button class="hotel-tab-btn"
+                onclick="filterHotelTab('Mountain Calling', this)">Mountain Calling</button>
+        <button class="hotel-tab-btn"
+                onclick="filterHotelTab('Stay Like Royals', this)">Stay Like Royals</button>
+        <button class="hotel-tab-btn"
+                onclick="filterHotelTab('Party Destinations', this)">Party Destinations</button>
+    </div>
+
+    <!-- HOTEL CARDS -->
+    <div class="hotel-cards" id="hotelCards">
+
+        <a th:each="hotel : ${hotels}"
+           th:href="@{/hotelbooking/{id}(id=${hotel.id})}"
+           class="hotel-card"
+           th:data-category="${hotel.category}">
+
+            <div class="hotel-img">
+                <img th:src="@{'/images/homehotels/' + ${hotel.image}}" alt="">
+            </div>
+            <h3 class="hotel-name" th:text="${hotel.name}"></h3>
+
+        </a>
+
+    </div>
+</div>
+
+<!-- POPULAR DESTINATIONS -->
+<div class="popular-section">
+    <h2 class="popular-title">Popular Destinations</h2>
+    <div class="popular-grid">
+
+        <a th:href="@{/hotelbooking/1}" class="pop-card">
+            <div class="pop-img">
+                <img th:src="@{/images/homehotels/p-1.jpg}" alt="">
+                <span class="pop-badge">Featured</span>
+            </div>
+            <div class="pop-info">
+                <h3>Ocean Pearl Resort</h3>
+                <p class="pop-location"><i class="fa-solid fa-location-dot"></i> Calangute Beach, Goa</p>
+                <p class="pop-rating"><i class="fa-solid fa-star"></i> 4.8 (1250 reviews)</p>
+                <p class="pop-amenities-label">Popular Amenities</p>
+                <p class="pop-amenities">WiFi | Pool | Spa | Restaurant</p>
+                <p class="pop-per">Per night from</p>
+                <p class="pop-price">₹4,500</p>
+                <button class="pop-btn">Book Now</button>
+            </div>
+        </a>
+
+        <a th:href="@{/hotelbooking/2}" class="pop-card">
+            <div class="pop-img">
+                <img th:src="@{/images/homehotels/p-2.jpg}" alt="">
+                <span class="pop-badge">Featured</span>
+            </div>
+            <div class="pop-info">
+                <h3>Blue Wave Beach Hotel</h3>
+                <p class="pop-location"><i class="fa-solid fa-location-dot"></i> Baga Beach, Goa</p>
+                <p class="pop-rating"><i class="fa-solid fa-star"></i> 4.6 (980 reviews)</p>
+                <p class="pop-amenities-label">Popular Amenities</p>
+                <p class="pop-amenities">WiFi | Pool | Bar | Restaurant</p>
+                <p class="pop-per">Per night from</p>
+                <p class="pop-price">₹3,500</p>
+                <button class="pop-btn">Book Now</button>
+            </div>
+        </a>
+
+        <a th:href="@{/hotelbooking/3}" class="pop-card">
+            <div class="pop-img">
+                <img th:src="@{/images/homehotels/p-3.jpg}" alt="">
+                <span class="pop-badge">Featured</span>
+            </div>
+            <div class="pop-info">
+                <h3>Misty Peak Lodge</h3>
+                <p class="pop-location"><i class="fa-solid fa-location-dot"></i> Mall Road, Shimla</p>
+                <p class="pop-rating"><i class="fa-solid fa-star"></i> 4.7 (1100 reviews)</p>
+                <p class="pop-amenities-label">Popular Amenities</p>
+                <p class="pop-amenities">WiFi | Heater | Fireplace | Spa</p>
+                <p class="pop-per">Per night from</p>
+                <p class="pop-price">₹3,500</p>
+                <button class="pop-btn">Book Now</button>
+            </div>
+        </a>
+
+        <a th:href="@{/hotelbooking/4}" class="pop-card">
+            <div class="pop-img">
+                <img th:src="@{/images/homehotels/hotel-4.jpg}" alt="">
+                <span class="pop-badge">Featured</span>
+            </div>
+            <div class="pop-info">
+                <h3>Royal Heritage Palace</h3>
+                <p class="pop-location"><i class="fa-solid fa-location-dot"></i> City Palace, Jaipur</p>
+                <p class="pop-rating"><i class="fa-solid fa-star"></i> 4.9 (2100 reviews)</p>
+                <p class="pop-amenities-label">Popular Amenities</p>
+                <p class="pop-amenities">WiFi | Pool | Spa | Royal Dining</p>
+                <p class="pop-per">Per night from</p>
+                <p class="pop-price">₹8,000</p>
+                <button class="pop-btn">Book Now</button>
+            </div>
+        </a>
+
+        <a th:href="@{/hotelbooking/5}" class="pop-card">
+            <div class="pop-img">
+                <img th:src="@{/images/homehotels/p-5.jpg}" alt="">
+                <span class="pop-badge">Featured</span>
+            </div>
+            <div class="pop-info">
+                <h3>Green Valley Retreat</h3>
+                <p class="pop-location"><i class="fa-solid fa-location-dot"></i> Madikeri, Coorg</p>
+                <p class="pop-rating"><i class="fa-solid fa-star"></i> 4.5 (870 reviews)</p>
+                <p class="pop-amenities-label">Popular Amenities</p>
+                <p class="pop-amenities">WiFi | Garden | Trekking | Bonfire</p>
+                <p class="pop-per">Per night from</p>
+                <p class="pop-price">₹2,500</p>
+                <button class="pop-btn">Book Now</button>
+            </div>
+        </a>
+
+        <a th:href="@{/hotelbooking/6}" class="pop-card">
+            <div class="pop-img">
+                <img th:src="@{/images/homehotels/p-6.jpg}" alt="">
+                <span class="pop-badge">Featured</span>
+            </div>
+            <div class="pop-info">
+                <h3>Neon Nights Hotel</h3>
+                <p class="pop-location"><i class="fa-solid fa-location-dot"></i> Juhu Beach, Mumbai</p>
+                <p class="pop-rating"><i class="fa-solid fa-star"></i> 4.6 (1560 reviews)</p>
+                <p class="pop-amenities-label">Popular Amenities</p>
+                <p class="pop-amenities">WiFi | Pool | Club | Rooftop Bar</p>
+                <p class="pop-per">Per night from</p>
+                <p class="pop-price">₹5,500</p>
+                <button class="pop-btn">Book Now</button>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+
+
+<!-- ==================cta========== -->
+<div class="cta-1">
+<section class="cta">
+    <div class="overlay"></div>
+
+    <div class="cta-content">
+        <h1>Ready to Book Your Next Experience?</h1>
+        <p>
+            Discover flights, sports events, movies, concerts, and activities — 
+            all in one place with TicketVerse.
+        </p>
+
+        <div class="buttons">
+            <button class="btn primary">Find Tickets</button>
+            <button class="btn secondary">Explore Categories</button>
+        </div>
+    </div>
+</section>
+</div>
+
+    <!-- =============footer ======================-->
+<div th:replace="fragments :: footer"></div>
+
+
+          <!-- scripts -->
+<!-- ===========owl carousel======== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ <script th:src="@{/js/owl.js}"></script>
+
+<script>
+    function filterHotelTab(category, el) {
+    document.querySelectorAll('.hotel-tab-btn').forEach(btn => btn.classList.remove('active'));
+    el.classList.add('active');
+
+    document.querySelectorAll('.hotel-card').forEach(card => {
+        if (card.dataset.category === category) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// show Beach Vacations on page load
+window.onload = () => {
+    document.querySelectorAll('.hotel-card').forEach(card => {
+        if (card.dataset.category === 'Beach Vacations') {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+};
+
+function searchArea(city) {
+    window.location.href = '/hotels?area=' + city;
+}
+</script>
+    </body>
+
+    </html>

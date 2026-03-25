@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Bus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/busbooking.css}" />
+</head>
+<body>
+    <!-- navbar -->
+
+<div th:replace="~{fragments :: navbar}"></div>
+<div th:replace="~{fragments :: booking-menus}"></div>
+
+<div class="book-banner">Book Your Bus Ticket</div>
+
+<div class="booking-layout">
+
+    <!-- PASSENGER FORM -->
+    <div class="passenger-box">
+        <div class="box-header">Passenger Info</div>
+        <div class="box-body">
+            <form id="bookingForm" th:action="@{/busbooking/confirm}" method="post">
+
+                <input type="hidden" name="busId" th:value="${bus.id}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" name="firstName" placeholder="First Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" name="lastName" placeholder="Last Name" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="tel" name="phone" placeholder="Phone Number" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Seats</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-users"></i>
+                            <input type="number" name="seats" min="1" max="6" value="1" required>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="section-title">Travel Details</p>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Boarding Point</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <select name="boardingPoint" required>
+                                <option value="" disabled selected>Select Boarding Point</option>
+                                <option value="Koyambedu">Koyambedu</option>
+                                <option value="CMBT">CMBT</option>
+                                <option value="Tambaram">Tambaram</option>
+                                <option value="Guindy">Guindy</option>
+                                <option value="Perungalathur">Perungalathur</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Seat Type</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-chair"></i>
+                            <select name="seatType">
+                                <option value="Window">Window</option>
+                                <option value="Aisle">Aisle</option>
+                                <option value="No Preference">No Preference</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BUS SEAT SELECTION -->
+<p class="section-title">Select Your Seats</p>
+
+<div class="seat-map-wrapper">
+    <div class="seat-legend">
+        <div class="legend-item"><div class="seat-demo available"></div> Available</div>
+        <div class="legend-item"><div class="seat-demo booked"></div> Booked</div>
+        <div class="legend-item"><div class="seat-demo selected"></div> Selected</div>
+    </div>
+
+    <!-- Bus layout: 2+2, rows 1-10 -->
+    <div class="bus-map" id="busSeatMap">
+
+         <div class="bus-inner">
+        <div class="bus-front">
+            <i class="fa-solid fa-steering-wheel"></i> Driver
+        </div>
+         </div>
+
+        <div class="seat-map">
+            <div class="seat-row header-row">
+                <span class="row-num"></span>
+                <span class="col-label">A</span>
+                <span class="col-label">B</span>
+                <span class="aisle"></span>
+                <span class="col-label">C</span>
+                <span class="col-label">D</span>
+            </div>
+
+            <div class="seat-row" th:each="row : ${#numbers.sequence(1, 10)}">
+                <span class="row-num" th:text="${row}"></span>
+                <div th:each="col : ${ {'A','B'} }"
+                     class="seat"
+                     th:id="${col + row}"
+                     th:classappend="${#lists.contains(bookedSeats, 'B' + col + row)} ? ' booked' : ' available'"
+                     th:onclick="${#lists.contains(bookedSeats, 'B' + col + row)} ? '' : 'selectBusSeat(this)'"
+                     th:text="${col + row}">
+                </div>
+                <div class="aisle"></div>
+                <div th:each="col : ${ {'C','D'} }"
+                     class="seat"
+                     th:id="${col + row}"
+                     th:classappend="${#lists.contains(bookedSeats, 'B' + col + row)} ? ' booked' : ' available'"
+                     th:onclick="${#lists.contains(bookedSeats, 'B' + col + row)} ? '' : 'selectBusSeat(this)'"
+                     th:text="${col + row}">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="selected-info">
+        Selected: <span id="busSelectedSeatsList">None</span>
+    </div>
+    <input type="hidden" name="selectedSeats" id="busSelectedSeatsInput">
+</div>
+              
+                <button type="button" class="submit-btn" onclick="openPayment()">
+                    Continue to Payment →
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- BUS INFO -->
+    <div class="booking-info-box">
+        <div class="box-header">Bus Info</div>
+
+        <div class="info-row">
+            <span class="label"><i class="fa-solid fa-bus"></i> Bus</span>
+            <span class="value" th:text="${bus.busName}"></span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Bus No</span>
+            <span class="value" th:text="${bus.busNumber}"></span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Type</span>
+            <span class="value" th:text="${bus.busType}"></span>
+        </div>
+
+        <div class="info-row">
+            <span class="label"><i class="fa-regular fa-clock"></i> Duration</span>
+            <span class="value" th:text="${bus.duration}"></span>
+        </div>
+
+        <div class="info-route">
+            <div class="route-line">
+                <span th:text="${bus.fromPlace}"></span>
+                <i class="fa-solid fa-arrow-right" style="color:#e8412a"></i>
+                <span th:text="${bus.toPlace}"></span>
+            </div>
+            <div class="route-times">
+                <span th:text="${bus.departureTime}"></span>
+                <span th:text="${bus.arrivalTime}"></span>
+            </div>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Date</span>
+            <span class="value" th:text="${bus.travelDate}"></span>
+        </div>
+
+        <div class="price-row">
+            <span class="total-label">Price per seat</span>
+            <span class="total-price">₹<span th:text="${bus.price}"></span></span>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===============Payment Modal ======================-->
+<div class="modal-overlay" id="paymentModal">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closePayment()">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </button>
+
+        <div class="modal-left">
+            <div class="pay-method active" onclick="switchMethod(this, 'credit')">Credit Card</div>
+            <div class="pay-method" onclick="switchMethod(this, 'netbanking')">Net Banking</div>
+            <div class="pay-method" onclick="switchMethod(this, 'upi')">UPI</div>
+        </div>
+
+        <div class="modal-divider"></div>
+
+        <div class="modal-right">
+            <div class="pay-form active" id="credit">
+                <div class="pay-field">
+                    <label>Card Number<span>*</span></label>
+                    <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                </div>
+                <div class="pay-row">
+                    <div class="pay-field">
+                        <label>Expiry Date<span>*</span></label>
+                        <input type="text" placeholder="MM/YYYY" maxlength="7" required>
+                    </div>
+                    <div class="pay-field">
+                        <label>CVV<span>*</span></label>
+                        <input type="text" placeholder="000" maxlength="3" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pay-form" id="netbanking">
+                <div class="pay-field">
+                    <label>Select Bank<span>*</span></label>
+                    <select>
+                        <option value="" disabled selected>Choose your bank</option>
+                        <option>SBI</option>
+                        <option>HDFC</option>
+                        <option>ICICI</option>
+                        <option>Axis Bank</option>
+                        <option>Kotak</option>
+                    </select>
+                </div>
+                <div class="pay-field">
+                    <label>User ID<span>*</span></label>
+                    <input type="text" placeholder="Enter Net Banking User ID" required>
+                </div>
+            </div>
+
+            <div class="pay-form" id="upi">
+                <div class="pay-field">
+                    <label>UPI ID<span>*</span></label>
+                    <input type="text" placeholder="yourname@upi" required>
+                </div>
+            </div>
+
+            <button type="button" class="pay-now-btn" onclick="submitPayment()">Pay Now</button>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+<script>
+function closePayment() {
+    document.getElementById('paymentModal').classList.remove('open');
+}
+
+function switchMethod(el, id) {
+    document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('active'));
+    document.querySelectorAll('.pay-form').forEach(f => f.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById(id).classList.add('active');
+}
+
+function submitPayment() {
+    const activeForm = document.querySelector('.pay-form.active');
+    const inputs = activeForm.querySelectorAll('input, select');
+    let valid = true;
+    inputs.forEach(input => {
+        if (input.value.trim() === '') {
+            input.style.border = '1.5px solid red';
+            valid = false;
+        } else {
+            input.style.border = '1px solid #ddd';
+        }
+    });
+    if (!valid) return;
+    document.getElementById('bookingForm').submit();
+}
+
+let busSelectedSeats = [];
+
+function selectBusSeat(el) {
+    const seatId = el.id;
+
+    if (el.classList.contains('selected')) {
+        el.classList.remove('selected');
+        el.classList.add('available');
+        busSelectedSeats = busSelectedSeats.filter(s => s !== seatId);
+    } else {
+        const maxSeats = parseInt(document.querySelector('input[name="seats"]').value) || 1;
+        if (busSelectedSeats.length >= maxSeats) {
+            alert('You can only select ' + maxSeats + ' seat(s). Deselect a seat first.');
+            return;
+        }
+        el.classList.remove('available');
+        el.classList.add('selected');
+        busSelectedSeats.push(seatId);
+    }
+
+    updateBusSelectedDisplay();
+}
+
+function openPayment() {
+    const form = document.getElementById('bookingForm');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    const seats = parseInt(document.querySelector('input[name="seats"]').value) || 1;
+    if (busSelectedSeats.length !== seats) {
+        alert('Please select ' + seats + ' seat(s) before proceeding.');
+        return;
+    }
+    document.getElementById('paymentModal').classList.add('open');
+}
+
+
+function updateBusSelectedDisplay() {
+    const display = document.getElementById('busSelectedSeatsList');
+    const input = document.getElementById('busSelectedSeatsInput');
+
+    if (busSelectedSeats.length === 0) {
+        display.textContent = 'None';
+        input.value = '';
+    } else {
+        const labels = busSelectedSeats.map(s => s.replace('B', ''));
+        display.textContent = labels.join(', ');
+        input.value = busSelectedSeats.join(', ');
+    }
+}
+</script>
+
+</body>
+</html>

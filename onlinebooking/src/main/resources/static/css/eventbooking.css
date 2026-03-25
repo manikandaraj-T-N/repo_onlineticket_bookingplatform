@@ -1,0 +1,307 @@
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================= VARIABLES ================= */
+:root {
+  --color-primary: #032626;
+  --color-primary-2: #008080;
+  --color-secondary: #F44336;
+  --color-secondary-2: #FF6F61;
+  --color-accent: #FFB803;
+  --color-accent-2: #FFE236;
+}
+
+/* ================= FONT ================= */
+@font-face {
+  font-family: 'Inter';
+  src: url('/Inter/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+}
+
+/* ================= BODY ================= */
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f5f0eb;
+  /* padding: 40px 20px; */
+}
+
+/* ================= BANNER ================= */
+.book-banner {
+            background: #e8412a;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .booking-layout {
+            display: flex;
+            gap: 25px;
+            padding: 30px 40px;
+            align-items: flex-start;
+        }
+
+        .passenger-box {
+            flex: 1;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+        }
+
+        .box-header {
+            background: #e8412a;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .box-body { padding: 30px; }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            color: #777;
+            font-weight: 500;
+        }
+
+        .input-wrap {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0 12px;
+            background: #fafafa;
+        }
+
+        .input-wrap i {
+            color: #777;
+            margin-right: 10px;
+            font-size: 15px;
+        }
+
+        .input-wrap input,
+        .input-wrap select {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #e8412a;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover { background: #c7321d; }
+
+        /* Event Info Box */
+        .booking-info-box {
+            width: 300px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            height: fit-content;
+        }
+
+        .event-info-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .info-body { padding: 20px; }
+        .info-body h3 { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .info-row .label { color: #777; }
+        .info-row .value { font-weight: 600; }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0 0;
+        }
+
+        .price-row .total-label { font-size: 15px; font-weight: 600; }
+        .price-row .total-price { font-size: 22px; font-weight: 800; color: #e8412a; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            background: #fff;
+            border-radius: 16px;
+            width: 700px;
+            max-width: 95vw;
+            padding: 30px;
+            position: relative;
+            display: flex;
+            min-height: 380px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #333;
+        }
+        .modal-left {
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 20px;
+        }
+        .pay-method {
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            transition: background 0.2s;
+        }
+        .pay-method:hover { background: #f5f0eb; }
+        .pay-method.active { background: #e8412a; color: #fff; font-weight: 600; }
+        .modal-divider { width: 1px; background: #eee; margin: 0 20px; }
+        .modal-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .pay-form { display: none; flex-direction: column; gap: 20px; }
+        .pay-form.active { display: flex; }
+        .pay-row { display: flex; gap: 15px; }
+        .pay-field { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+        .pay-field label { font-size: 13px; color: #555; font-weight: 500; }
+        .pay-field label span { color: #e8412a; }
+        .pay-field input, .pay-field select {
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: #fafafa;
+        }
+        .pay-field input:focus, .pay-field select:focus { border-color: #e8412a; }
+        .pay-now-btn {
+            align-self: flex-end;
+            padding: 14px 40px;
+            background: #e8412a;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .pay-now-btn:hover { background: #c7321d; }
+
+/* ================= RESPONSIVE ================= */
+
+/* MOBILE */
+@media (max-width: 576px) {
+
+  body {
+    padding: 20px 10px;
+  }
+
+  .booking-layout {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .booking-info-box {
+    width: 100%;
+  }
+
+  .modal-box {
+    flex-direction: column;
+  }
+
+  .modal-left {
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .modal-divider {
+    display: none;
+  }
+}
+
+/* TABLET */
+@media (max-width: 992px) {
+
+  .booking-layout {
+    flex-direction: column;
+  }
+
+  .booking-info-box {
+    width: 100%;
+  }
+}
+
+/* LARGE */
+@media (min-width: 1200px) {
+
+  .booking-layout {
+    max-width: 1200px;
+    margin: auto;
+  }
+}

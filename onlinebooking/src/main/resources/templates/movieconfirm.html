@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Booking Confirmed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+       <link rel="stylesheet" th:href="@{/css/movieconfirm.css}" />
+
+       <link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body>
+
+<div th:replace="~{fragments :: navbar}"></div>
+<div th:replace="~{fragments :: booking-menus}"></div>
+
+<div class="confirm-card" style="margin-top:30px;">
+    <div class="confirm-top">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>Movie Ticket Booked!</h2>
+        <p>Your movie ticket has been successfully booked. Enjoy the show!</p>
+    </div>
+
+    <div class="confirm-body">
+        <div class="ref-row">
+            <span>Booking Reference</span>
+            <span class="ref-value">MOV-<span th:text="${booking.id}"></span></span>
+        </div>
+        <div class="ref-row">
+            <span>Booking Date</span>
+            <span class="ref-value" th:text="${booking.bookingDate}"></span>
+        </div>
+
+        <p class="sec-title">Movie Details</p>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-film"></i></div>
+            <div class="text">
+                <h4 th:text="${movie.title}"></h4>
+                <p th:text="${movie.language + ' | ' + movie.genre + ' | ' + movie.duration}"></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-chair"></i></div>
+            <div class="text">
+                <h4>Seat Type</h4>
+                <p th:text="${booking.seatType}"></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-ticket"></i></div>
+            <div class="text">
+                <h4>Tickets Booked</h4>
+                <p th:text="${booking.tickets}"></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-regular fa-user"></i></div>
+            <div class="text">
+                <h4>Booked By</h4>
+                <p>
+                    <span th:text="${booking.firstName}"></span>
+                    <span th:text="${booking.lastName}"></span>
+                </p>
+            </div>
+        </div>
+
+        <div class="total-row">
+            <span>Total Amount Paid</span>
+            <span class="total-price">
+                ₹<span th:text="${movie.price * booking.tickets}"></span>
+            </span>
+        </div>
+
+        <div class="btn-row">
+            <a href="/homemovies" class="btn-back">← Back to Movies</a>
+            <a th:href="@{/moviebooking/download/{id}(id=${booking.id})}" class="btn-download">
+                <i class="fa-solid fa-download"></i> Download Ticket
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+</body>
+</html>

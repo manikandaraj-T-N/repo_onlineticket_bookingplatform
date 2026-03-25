@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking Confirmed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/hotelconfirm.css}" />
+</head>
+<body>
+
+<div th:replace="~{fragments :: navbar}"></div>
+<div th:replace="~{fragments :: booking-menus}"></div>
+
+<div class="confirm-card" style="margin-top:30px;">
+    <div class="confirm-top">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>Hotel Booked!</h2>
+        <p>Your hotel has been successfully booked. Enjoy your stay!</p>
+    </div>
+
+    <div class="confirm-body">
+        <div class="ref-row">
+            <span>Booking Reference</span>
+            <span class="ref-value">HTL-<span th:text="${booking.id}"></span></span>
+        </div>
+        <div class="ref-row">
+            <span>Booking Date</span>
+            <span class="ref-value" th:text="${booking.bookingDate}"></span>
+        </div>
+
+        <p class="sec-title">Hotel Details</p>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-hotel"></i></div>
+            <div class="text">
+                <h4 th:text="${hotel.name}"></h4>
+                <p th:text="${hotel.category}"></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="text">
+                <h4>Address</h4>
+                <p th:text="${hotel.address + ', ' + hotel.city}"></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-regular fa-calendar"></i></div>
+            <div class="text">
+                <h4>Check In</h4>
+                <p th:text="${booking.checkIn}"></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-regular fa-calendar-check"></i></div>
+            <div class="text">
+                <h4>Check Out</h4>
+                <p th:text="${booking.checkOut}"></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-moon"></i></div>
+            <div class="text">
+                <h4>Duration</h4>
+                <p><span th:text="${booking.nights}"></span> Night(s)</p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-users"></i></div>
+            <div class="text">
+                <h4>Guests</h4>
+                <p th:text="${booking.guests}"></p>
+            </div>
+        </div>
+
+        <div class="total-row">
+            <span>Total Amount Paid</span>
+            <span class="total-price">₹<span th:text="${booking.totalPrice}"></span></span>
+        </div>
+
+        <div class="btn-row">
+            <a href="/homehotels" class="btn-back">← Back to Hotels</a>
+            <a th:href="@{/hotelbooking/download/{id}(id=${booking.id})}" class="btn-download">
+                <i class="fa-solid fa-download"></i> Download Booking
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+</body>
+</html>

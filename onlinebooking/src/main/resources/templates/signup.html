@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+
+    <style>
+        form .icons{
+            top: 73% !important;
+        }
+    </style>
+</head>
+<body>
+<!-- navbar -->
+    <div th:replace="fragments :: navbar"></div>
+     <div th:replace="fragments :: booking-menus"></div>
+
+     <section class="login-container"> <!-- reuse same container -->
+    
+    <div class="login-picture">
+        <img src="/images/loginpage.png" alt="Signup Picture">
+    </div>
+
+    <div class="login-form">
+        <h3>Create Account</h3>
+        <p>Sign up to start booking</p>
+
+        <p th:if="${param.error}" style="color:red;">Email already exists!</p>
+
+        <form action="/signup" method="post">
+
+            <div class="email">
+                <label>Name</label><br><br>
+                <i class="fa-solid fa-user icons"></i>
+                <input type="text" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <br><br>
+
+            <div class="email">
+                <label>Email Address</label><br><br>
+                <i class="fa-solid fa-envelope icons"></i>
+                <input type="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <br><br>
+
+            <div class="pwd">
+                <label>Password</label><br><br>
+                <i class="fa-solid fa-lock  icons" ></i>
+                <input type="password" name="password" placeholder="Enter password" required>
+            </div>
+
+            <br><br>
+
+            <div class="btn">
+                <button type="submit">Sign Up</button>
+            </div>
+
+        </form>
+
+        <div class="dont-acc">
+            <p>Already have an account?</p>
+            <a href="/login">Login</a>
+        </div>
+
+        <hr>
+        <p class="policy">
+            By continuing, you agreed to BookAll's Terms of Services and Privacy Policy
+        </p>
+    </div>
+
+</section>
+
+ 
+
+
+  <!-- footer -->
+  <div th:replace="fragments :: footer"></div>
+</body>
+</html>

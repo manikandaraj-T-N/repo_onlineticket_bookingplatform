@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/bookingdetail.css}" />
+</head>
+<body>
+
+<div th:replace="~{fragments :: navbar}"></div>
+<div th:replace="~{fragments :: booking-menus}"></div>
+
+<div class="detail-card" style="margin-top:30px;">
+
+    <div class="detail-top">
+        <h2><i class="fa-solid fa-plane"></i> Flight Booking Details</h2>
+        <span th:class="${booking.bookingStatus == 'Confirmed'} ? 'status-badge confirmed' :
+                        (${booking.bookingStatus == 'Cancelled'} ? 'status-badge cancelled' :
+                        'status-badge pending')"
+              th:text="${booking.bookingStatus}">
+        </span>
+    </div>
+
+    <div class="detail-body">
+
+        <!-- Reference Section -->
+        <div class="ref-section">
+            <div class="ref-item">
+                <div class="ref-label">Booking Reference</div>
+                <div class="ref-value">FL-<span th:text="${booking.id}"></span></div>
+            </div>
+            <div class="ref-item">
+                <div class="ref-label">Booking Date</div>
+                <div class="ref-value" th:text="${booking.bookingDate}"></div>
+            </div>
+            <div class="ref-item">
+                <div class="ref-label">Flight Number</div>
+                <div class="ref-value" th:text="${flight.flightNumber}"></div>
+            </div>
+            <div class="ref-item">
+                <div class="ref-label">Travel Date</div>
+                <div class="ref-value" th:text="${flight.travelDate}"></div>
+            </div>
+        </div>
+
+        <!-- Route Visual -->
+        <p class="section-title">Flight Route</p>
+        <div class="route-visual">
+            <div class="route-point">
+                <div class="city" th:text="${flight.fromPlace}"></div>
+                <div class="time" th:text="${flight.departureTime}"></div>
+                <div class="label">Departure</div>
+            </div>
+            <div class="route-arrow">
+                <div class="line"></div>
+                <div class="duration" th:text="${flight.duration}"></div>
+            </div>
+            <div class="route-point">
+                <div class="city" th:text="${flight.toPlace}"></div>
+                <div class="time" th:text="${flight.arrivalTime}"></div>
+                <div class="label">Arrival</div>
+            </div>
+        </div>
+
+        <!-- Flight Info -->
+        <p class="section-title">Flight Info</p>
+        <div class="info-grid">
+            <div class="info-box">
+                <div class="info-label">Airline</div>
+                <div class="info-value" th:text="${flight.airline}"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Stop</div>
+                <div class="info-value" th:text="${flight.stop}"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Class</div>
+                <div class="info-value" th:text="${booking.travelClass}"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Passengers</div>
+                <div class="info-value" th:text="${booking.passengers}"></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Passenger Name</div>
+                <div class="info-value">
+                    <span th:text="${booking.firstName}"></span>
+                    <span th:text="${booking.lastName}"></span>
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Phone</div>
+                <div class="info-value" th:text="${booking.phone}"></div>
+            </div>
+        </div>
+
+        <!-- Price -->
+        <div class="price-section">
+            <span class="price-label">Total Amount Paid</span>
+            <span class="price-value">₹<span th:text="${flight.price * booking.passengers}"></span></span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-row">
+            <a href="/mybookings" class="btn-back">← Back to My Bookings</a>
+            <a th:href="@{/booking/download/{id}(id=${booking.id})}" class="btn-download">
+                <i class="fa-solid fa-download"></i> Download Ticket
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+</body>
+</html>

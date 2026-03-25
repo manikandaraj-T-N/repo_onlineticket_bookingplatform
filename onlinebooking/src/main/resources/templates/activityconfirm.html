@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+      <link rel="stylesheet" th:href="@{/css/login.css}" />
+       <link rel="stylesheet" th:href="@{/css/activityconfirm.css}" />
+</head>
+<body>
+
+<div class="confirm-card">
+    <div class="confirm-top">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>Activity Booked!</h2>
+        <p>Your activity has been successfully booked. Have fun!</p>
+    </div>
+
+    <div class="confirm-body">
+        <div class="ref-row">
+            <span>Booking Reference</span>
+            <span class="ref-value">ACT-<span th:text="${booking.id}"></span></span>
+        </div>
+        <div class="ref-row">
+            <span>Booking Date</span>
+            <span class="ref-value" th:text="${booking.bookingDate}"></span>
+        </div>
+
+        <p class="sec-title">Activity Details</p>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-person-hiking"></i></div>
+            <div class="text">
+                <h4 th:text="${activity.name}"></h4>
+                <p th:text="${activity.category}"></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="text">
+                <h4>Location</h4>
+                <p th:text="${activity.city}"></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-users"></i></div>
+            <div class="text">
+                <h4>Participants</h4>
+                <p th:text="${booking.participants}"></p>
+            </div>
+        </div>
+
+        <div class="total-row">
+            <span>Total Amount Paid</span>
+            <span class="total-price">₹<span th:text="${activity.price * booking.participants}"></span></span>
+        </div>
+
+       <div class="btn-row">
+    <a href="/homeactivities" class="btn-back">← Back to Activities</a>
+    <a th:href="@{/activitybooking/download/{id}(id=${booking.id})}" class="btn-mybookings">
+        <i class="fa-solid fa-download"></i> Download Ticket
+    </a>
+</div>
+    </div>
+</div>
+
+</body>
+</html>

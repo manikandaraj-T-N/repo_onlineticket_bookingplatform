@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home|Activities Booking</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/homeactivities.css}" />
+
+
+       <!-- ===========owl carousel css======== -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    </head>
+
+    <body>
+        <!-- navbar -->
+        <div th:replace="fragments :: navbar"></div>
+
+        <div th:replace="fragments :: booking-menus"></div>
+
+
+       <!-- ============banner=========== -->
+        <section class="banner">
+
+    <div class="banner-img">
+        <img th:src="@{/images/homeactivities/banner-riding.png}" alt="">
+    </div>
+
+    <div class="overlay-text">
+        <h2>Discover Fun Activities Near You</h2>
+        <p>Book exciting experiences including adventure sports,theme parks,indoor <br> games, and family activities</p>
+    </div>
+
+        <!-- FORM-->
+        <div class="form">
+    <form action="/activities" method="get">
+        <button type="submit">Explore Sports Events</button>
+
+    </form>
+</div>
+
+</section>
+
+<!-- =====================filters and cards========== -->
+
+<section class="activities-section">
+
+    <!-- FILTERS SIDEBAR -->
+    <div class="act-filters">
+
+        <div class="act-filter-header">
+        <h2>Filters</h2>
+    </div>
+        <!-- Price Range -->
+        <div class="act-filter-group">
+            <div class="price-range-labels">
+                <span>₹<span id="actMinVal">200</span></span>
+                <span>₹<span id="actMaxVal">3,000</span></span>
+            </div>
+            <input type="range" id="actPriceRange" min="200" max="3000" value="3000">
+        </div>
+
+        <!-- Activities -->
+        <div class="act-filter-group">
+            <h3>Activities</h3>
+            <label class="act-radio">
+                <input type="radio" name="activity" value="all" checked> All
+            </label>
+            <label class="act-radio">
+                <input type="radio" name="activity" value="Adventure"> Adventure
+            </label>
+            <label class="act-radio">
+                <input type="radio" name="activity" value="Theme Parks"> Theme Parks
+            </label>
+            <label class="act-radio">
+                <input type="radio" name="activity" value="Indoor Games"> Indoor Games
+            </label>
+            <label class="act-radio">
+                <input type="radio" name="activity" value="Water Sports"> Water Sports
+            </label>
+            <label class="act-radio">
+                <input type="radio" name="activity" value="Family Activities"> Family Activities
+            </label>
+        </div>
+
+        <!-- City -->
+        <div class="act-filter-group">
+            <h3>City</h3>
+            <label class="act-radio">
+                <input type="radio" name="city" value="all" checked> All
+            </label>
+            <label class="act-radio">
+                <input type="radio" name="city" value="Chennai"> Chennai
+            </label>
+            <label class="act-radio">
+                <input type="radio" name="city" value="Bangalore"> Bangalore
+            </label>
+            <label class="act-radio">
+                <input type="radio" name="city" value="Hyderabad"> Hyderabad
+            </label>
+            <label class="act-radio">
+                <input type="radio" name="city" value="Munnar"> Munnar
+            </label>
+            <label class="act-radio">
+                <input type="radio" name="city" value="Coorg"> Coorg
+            </label>
+        </div>
+
+    </div>
+
+    <!-- ACTIVITY CARDS -->
+    <div class="act-cards" id="activityCards">
+    <div class="act-card"
+         th:each="activity : ${activities}"
+         th:data-price="${activity.price}"
+         th:data-category="${activity.category}"
+         th:data-city="${activity.city}">
+
+        <div class="act-img">
+            <img th:src="@{'/images/homeactivities/' + ${activity.image}}" alt="">
+        </div>
+        <div class="act-info">
+            <h3 th:text="${activity.name}"></h3>
+            <p class="act-location">
+                <i class="fa-solid fa-location-dot"></i>
+                <span th:text="${activity.city}"></span>
+            </p>
+            <div class="act-bottom">
+                <span class="act-rating">
+                    <i class="fa-solid fa-star"></i>
+                    <span th:text="${activity.rating}"></span>
+                </span>
+                <span class="act-price">₹<span th:text="${activity.price}"></span></span>
+            </div>
+          <a th:href="@{/activitybooking/{id}(id=${activity.id})}" class="act-btn">Book Now</a>
+        </div>
+    </div>
+</div>
+</section>
+
+
+
+<!-- ==================featured experience========== -->
+<div class="experience-1">
+<section class="experience">
+    <div class="overlay"></div>
+
+    <div class="experience-content">
+        <h1>Hot Air Ballon Adventure</h1>
+        <p>Hampi | Hampi</p>
+        <p> Enjoy breathtaking aerials views as you float above stunning landscape in a<br>  peaceful hot air ballon ride </p>
+
+        <div class="buttons">
+            <button class="btn primary">View Details</button>
+            <button class="btn secondary">Book Experience</button>
+            
+        </div>
+    </div>
+</section>
+</div>
+
+
+
+
+
+
+<!-- ==================cta========== -->
+<div class="cta-1">
+<section class="cta">
+    <div class="overlay"></div>
+
+    <div class="cta-content">
+        <h1>Ready for Your Next Adventure?</h1>
+        <p>plore exciting activities and create unforgotable experinences with your <br> friends and family</p>
+
+        <div class="buttons">
+            <button class="btn primary">Book Activities</button>
+            
+        </div>
+    </div>
+</section>
+</div>
+           <!-- =============footer ======================-->
+        <div th:replace="fragments :: footer"></div>
+
+
+          <!-- scripts -->
+<!-- ===========owl carousel======== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ <script th:src="@{/js/owl.js}"></script>
+
+ <!-- filter script -->
+ <script>
+    const actPriceRange = document.getElementById('actPriceRange');
+const actMaxVal = document.getElementById('actMaxVal');
+
+actPriceRange.addEventListener('input', () => {
+    actMaxVal.innerText = parseInt(actPriceRange.value).toLocaleString();
+    filterActivities();
+});
+
+document.querySelectorAll('input[name="activity"]').forEach(r => {
+    r.addEventListener('change', filterActivities);
+});
+
+document.querySelectorAll('input[name="city"]').forEach(r => {
+    r.addEventListener('change', filterActivities);
+});
+
+function filterActivities() {
+    const maxPrice = parseInt(actPriceRange.value);
+    const selectedActivity = document.querySelector('input[name="activity"]:checked').value;
+    const selectedCity = document.querySelector('input[name="city"]:checked').value;
+
+    document.querySelectorAll('.act-card').forEach(card => {
+        const price = parseInt(card.dataset.price);
+        const category = card.dataset.category;
+        const city = card.dataset.city;
+
+        let show = true;
+
+        if (price > maxPrice) show = false;
+        if (selectedActivity !== 'all' && category !== selectedActivity) show = false;
+        if (selectedCity !== 'all' && city !== selectedCity) show = false;
+
+        card.style.display = show ? 'block' : 'none';
+    });
+}
+ </script>
+
+    </body>
+
+    </html>

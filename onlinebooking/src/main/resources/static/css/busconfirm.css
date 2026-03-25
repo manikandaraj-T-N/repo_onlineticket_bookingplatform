@@ -1,0 +1,224 @@
+/* ========== RESET ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== VARIABLES ========== */
+:root {
+  --color-primary: #032626;
+  --color-primary-2: #008080;
+  --color-secondary: #F44336;
+  --color-secondary-2: #FF6F61;
+  --color-accent: #FFB803;
+  --color-accent-2: #FFE236;
+
+  --color-text: #333;
+  --color-muted: #777;
+  --color-bg: #f5f0eb;
+}
+
+/* ========== BASE ========== */
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--color-bg);
+  
+}
+
+/* ========== CARD ========== */
+.confirm-card {
+  max-width: 650px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/* TOP */
+.confirm-top {
+  background: var(--color-primary);
+  padding: 30px;
+  text-align: center;
+  color: #fff;
+}
+
+.confirm-top i {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.confirm-top h2 { font-size: 22px; }
+.confirm-top p { font-size: 13px; opacity: 0.85; }
+
+/* BODY */
+.confirm-body {
+  padding: 30px;
+}
+
+/* REF ROW */
+.ref-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.ref-value {
+  font-weight: 700;
+}
+
+/* SECTION TITLE */
+.sec-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 20px 0 15px;
+}
+
+/* DETAILS */
+.detail-item {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+}
+
+.detail-item .icon {
+  width: 38px;
+  height: 38px;
+  background: #fff0ee;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+.detail-item .text h4 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.detail-item .text p {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+/* TOTAL */
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+  margin-top: 10px;
+}
+
+.total-row span:first-child {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.total-price {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-secondary);
+}
+
+/* BUTTONS */
+.btn-row {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn-back {
+  flex: 1;
+  padding: 13px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.btn-mybookings {
+  flex: 1;
+  padding: 13px;
+  background: var(--color-secondary);
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+}
+
+/* ================================================= */
+/* ================= RESPONSIVE ==================== */
+/* ================================================= */
+
+/* 🔹 XS (Mobile <576px) */
+@media (max-width: 575px) {
+
+  body {
+    padding: 20px 10px;
+  }
+
+  .confirm-top {
+    padding: 20px;
+  }
+
+  .confirm-body {
+    padding: 20px;
+  }
+
+  .ref-row {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .detail-item {
+    gap: 10px;
+  }
+
+  .btn-row {
+    flex-direction: column;
+  }
+
+  .total-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
+
+/* 🔹 SM (576px - 768px) */
+@media (max-width: 768px) {
+
+  .confirm-card {
+    max-width: 95%;
+  }
+
+  .btn-row {
+    gap: 10px;
+  }
+}
+
+/* 🔹 MD (768px - 992px) */
+@media (max-width: 992px) {
+
+  .confirm-card {
+    max-width: 90%;
+  }
+}
+
+/* 🔹 XL (>1200px) */
+@media (min-width: 1200px) {
+
+  .confirm-card {
+    max-width: 700px;
+  }
+}

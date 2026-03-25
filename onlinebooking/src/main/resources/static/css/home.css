@@ -1,0 +1,917 @@
+:root {
+  --color-primary: #032626;
+  --color-primary-2: #008080;
+  --color-secondary: #F44336;
+  --color-secondary-2: #FF6F61;
+  --color-accent: #FFB803;
+  --color-accent-2: #FFE236;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/Inter/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+
+/* ================================================
+   OWL CAROUSEL NAV
+================================================ */
+.owl-nav button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    border-radius: 50% !important;
+    background-color: white !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    cursor: pointer !important;
+}
+
+.owl-nav button span {
+    padding: 20px !important;
+    display: flex;
+    font-size: 40px !important;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+}
+
+.owl-nav .owl-prev { left: 10px; }
+.owl-nav .owl-next { right: 10px; }
+
+.owl-carousel .owl-nav.disabled { display: block !important; }
+
+.owl-carousel .owl-nav button.owl-next,
+.owl-carousel .owl-nav button.owl-prev {
+    color: var(--color-secondary-2) !important;
+}
+
+.owl-carousel .owl-nav button.owl-next,
+.owl-carousel .owl-nav button.owl-prev,
+.owl-carousel button.owl-dot {
+    padding: 20px !important;
+}
+
+
+/* ================================================
+   BANNER
+================================================ */
+.banner {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 5% 3%;
+    position: relative !important;
+}
+
+.img {
+    width: 100%;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.owl-carousel .img::before {
+    content: "";
+    position: absolute !important;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+}
+
+.owl-carousel .img { position: relative !important; }
+
+.owl-carousel,
+.owl-stage-outer,
+.owl-stage,
+.owl-item {
+    position: relative !important;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 9999;
+    width: 100%;
+}
+
+.overlay-text h2 { font-size: 32px; margin-bottom: 10px; }
+.overlay-text p  { font-size: 16px; }
+
+.booking-box {
+    width: 80%;
+    margin: -60px auto 0;
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 10;
+}
+
+
+/* ================================================
+   FORMS
+================================================ */
+.forms .form {
+     display: none; 
+    }
+.forms .form.active 
+{
+     display: flex;
+     }
+
+.tabs{
+    display: flex;
+    align-items: center;
+    gap: 5%;
+    margin-bottom: 3%;
+    margin-left: 3%;
+
+}
+
+.tab{
+    padding: 10px 40px;
+    border-radius: 20px;
+    border:none;
+    cursor: pointer;
+}
+
+.banner .form input {
+  padding: 14px 16px;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  background: #f2f2f256;
+  font-size: 14px;
+}
+
+.banner .form button {
+  padding: 20px 60px;
+  background-color: var(--color-secondary-2);
+  color: white;
+  transition: all 0.3s ease-in-out;
+  white-space: nowrap;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* ================================================
+   SERVICES / CARDS
+================================================ */
+.services .heading          { text-align: center; margin-bottom: 20px; }
+.services .heading h1       { font-size: 32px; }
+
+.cards {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    grid-template-columns: 1fr;
+}
+
+.card {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.card:hover {
+    transform: scale(1.05) translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.cards .card span {
+    position: absolute;
+    bottom: 100px;
+    left: 115px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    background-color: #ffffffc0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 30px;
+}
+
+.cards .card span i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.cards .card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.cards .card:hover img { transform: scale(1.1); }
+
+.cards a.card {
+    text-decoration: none;
+    display: block;
+}
+
+
+/* ================================================
+   ABOUT
+================================================ */
+.about {
+    background-image: url('../images/home/experience-bg.png');
+}
+
+.about-1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.about .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-box {
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about .right              { padding: 4%; }
+.about .right .heading     { text-align: center; }
+.about .right .heading h2  { font-size: 32px; }
+
+.about .right p {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.about .right ul {
+    margin-top: 20px;
+    list-style-type: none;
+    padding-left: 20px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.about .right ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    position: relative;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.about .right ul li span i {
+    border-radius: 50%;
+    padding: 5px;
+    background-color: var(--color-secondary);
+    color: white;
+}
+
+.about .right button {
+    display: block;
+    padding: 10px 50px;
+    background-color: var(--color-primary-2);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+
+/* ================================================
+   EXPERIENCE
+================================================ */
+.experience {
+    background-image: url('/images/home/experience-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.experience-carousel.owl-carousel .owl-nav button.owl-next,
+.experience-carousel.owl-carousel .owl-nav button.owl-prev {
+    display: none !important;
+}
+
+.experience .heading             { text-align: center; margin-bottom: 20px; }
+.experience-carousel .content .event p { color: gray; font-size: 14px; }
+
+.experience-carousel .content .date-rating {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.experience-carousel .content .date-rating .rating .date span { font-size: 16px; color: gray; }
+.experience-carousel .content .date-rating .rating span       { font-size: 14px; color: yellow; }
+
+.experience-carousel .content .price-paymentbtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.experience-carousel .content .price-paymentbtn p {
+    color: var(--color-secondary);
+    font-size: 24px;
+}
+
+.experience-carousel .content .price-paymentbtn button {
+    padding: 10px 50px;
+    background-color: var(--color-secondary-2);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+
+/* ================================================
+   DESTINATION
+================================================ */
+.destination .heading { text-align: center; margin-bottom: 20px; }
+
+.destination .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: space-evenly;
+}
+
+.destination .content .image {
+    width: 350px;
+    height: 250px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.destination .content .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.destination .content .image:hover img { transform: scale(1.1); }
+
+.destination .content .city-rating {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.destination .content .city-rating i { color: yellow; }
+.destination .content .location      { font-size: 14px; color: gray; }
+
+.destination .content .price-paymentbtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.destination .content .price-paymentbtn button {
+    padding: 10px 50px;
+    background-color: var(--color-primary-2);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+
+/* ================================================
+   POPULAR EVENTS
+================================================ */
+.pop-events .heading{
+    text-align: center;
+}
+.pop-events .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: space-evenly;
+}
+
+.pop-events .cards .content {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.pop-events .cards .content .image {
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.pop-events .cards .content .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.pop-events .cards .content .image:hover img { transform: scale(1.1); }
+
+.pop-events .cards .content .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 0 0 20px 20px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.pop-events .cards .content .overlay:hover ~ .image img { transform: scale(1.1); }
+.pop-events .cards .content .overlay i                  { color: yellow; padding: 10px; }
+
+.pop-events .cards .content .overlay p:nth-child(3) {
+    font-size: 14px;
+    color: gray;
+}
+
+
+/* ================================================
+   CHOOSE US
+================================================ */
+.choose {
+    background-image: url('/images/home/experience-bg.png');
+    background-size: cover;
+    background-position: center;
+    padding: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10%;
+}
+
+.choose .choose-image {
+    width: 500px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.choose .choose-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.choose-content .small-title { font-weight: 400; font-size: 22px; }
+.choose-content .main-title  { font-size: 34px; margin-top: 20px; margin-bottom: 20px; }
+
+.choose-content .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.choose-content .features .feature {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.choose-content .features .feature img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+
+/* ================================================
+   CUSTOMERS / REVIEWS
+================================================ */
+.customers {
+    position: relative;
+    background-image: url('/images/home/customers-bg.png');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 40px;
+    text-align: center;
+}
+
+.customers::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 0;
+}
+
+.customers-title {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.owl-customers { position: relative; z-index: 1; }
+
+.review-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 16px;
+    padding: 25px;
+    margin: 5px 20px 50px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    clip-path: polygon(0% 10%, 95% 0%, 100% 85%, 5% 100%);
+}
+
+.review-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.review-top img {
+    width: 65px !important;
+    height: 65px !important;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-secondary);
+    flex-shrink: 0;
+}
+
+.review-top p  { font-size: 14px; color: black; line-height: 1.6; margin: 0; }
+
+.review-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.review-info p        { margin: 0; font-size: 16px; color: #111; }
+.review-info .location{ font-size: 13px; margin-top: 10px; }
+
+.quote-icon { font-size: 60px; color: var(--color-secondary-2); line-height: 1; }
+
+.owl-customers.owl-carousel .owl-nav button.owl-next,
+.owl-customers.owl-carousel .owl-nav button.owl-prev {
+    display: none;
+}
+
+
+/* ================================================
+   CTA
+================================================ */
+.cta {
+    position: relative;
+    height: 350px;
+    border-radius: 30px;
+    overflow: hidden;
+    background: url('/images/home/cta-bg.png') no-repeat center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.cta-1 { padding: 5%; }
+
+.cta .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,128,128,0.5));
+}
+
+.cta-content {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.cta-content h1 { font-size: 36px; margin-bottom: 15px; }
+.cta-content p  { font-size: 16px; margin-bottom: 25px; line-height: 1.6; }
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn.primary            { background: #ff6b5c; color: white; }
+.btn.primary:hover      { background: #ff4a3d; }
+.btn.secondary          { background: #0f766e; color: white; }
+.btn.secondary:hover    { background: #0d5f59; }
+
+
+/* ================================================================================================================
+   RESPONSIVE  —  XS → XL
+================================================================================================================ */
+
+/* ─── XS  ( < 576px ) ─────────────────────────────────────── */
+@media (max-width: 575px) {
+
+    /* Banner */
+    .banner { margin-top: 10%; padding: 8% 3%; }
+    .img    { height: 180px; }
+
+    .overlay-text h2 { font-size: 18px; }
+    .overlay-text p  { font-size: 12px; }
+
+    .booking-box { width: 95%; margin-top: -30px; padding: 12px; }
+
+    /* Services cards */
+    .cards { grid-template-columns: 1fr; padding: 10px; gap: 15px; }
+    .cards .card img { height: 200px; }
+    .cards .card span {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 70px;
+        padding: 18px;
+    }
+
+    /* About */
+    .about-1 { flex-direction: column; gap: 20px; }
+    .img-box { width: 220px; height: 220px; }
+    .about .right            { padding: 4% 2%; }
+    .about .right .heading h2{ font-size: 22px; }
+    .about .right ul         { grid-template-columns: 1fr; }
+    .about .right ul li      { white-space: normal; font-size: 14px; }
+    .about .right button     { width: 100%; padding: 10px 20px; }
+
+    /* Experience */
+    .experience .heading h2  { font-size: 22px; }
+    .experience-carousel .content .price-paymentbtn {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    .experience-carousel .content .price-paymentbtn button { width: 100%; }
+
+    /* Destination */
+    .destination .cards      { flex-direction: column; align-items: center; gap: 15px; }
+    .destination .content .image { width: 100%; max-width: 340px; height: 200px; }
+    .destination .content .price-paymentbtn { flex-direction: column; gap: 8px; }
+    .destination .content .price-paymentbtn button { width: 100%; padding: 10px 20px; }
+
+    /* Popular Events */
+    .pop-events .heading{
+        text-align: center;
+    }
+
+    .pop-events .cards       { flex-direction: column; align-items: center; gap: 15px; }
+    .pop-events .cards .content .image { width: 100%; max-width: 320px; height: 260px; }
+
+    /* Choose Us */
+    .choose                  { flex-direction: column; gap: 25px; padding: 8% 4%; }
+    .choose .choose-image    { width: 100%; max-width: 100%; height: 220px; border-radius: 16px; }
+    .choose-content .small-title { font-size: 16px; }
+    .choose-content .main-title  { font-size: 22px; margin-top: 10px; margin-bottom: 15px; }
+    .choose-content .features    { grid-template-columns: 1fr; }
+    .choose-content .features .feature { gap: 12px; }
+    .choose-content .features .feature img { width: 40px; height: 40px; }
+
+    /* Customers */
+    .customers           { padding: 40px 15px; }
+    .customers-title     { font-size: 22px; }
+    .review-card         { padding: 15px; margin: 5px 5px 40px; }
+    .review-top img      { width: 50px !important; height: 50px !important; }
+    .review-info p       { font-size: 14px; }
+    .quote-icon          { font-size: 40px; }
+
+    /* CTA */
+    .cta         { height: auto; min-height: 260px; border-radius: 16px; padding: 30px 15px; }
+    .cta-content h1 { font-size: 22px; }
+    .cta-content p  { font-size: 13px; }
+    .buttons     { flex-direction: column; gap: 12px; align-items: center; }
+    .btn         { width: 100%; max-width: 240px; font-size: 14px; padding: 10px 20px; }
+
+    /* Services heading */
+    .services .heading h1  { font-size: 22px; }
+
+    /* Owl nav */
+    .owl-nav button span   { font-size: 22px !important; padding: 10px !important; }
+}
+
+
+/* ─── SM  ( 576px – 767px ) ───────────────────────────────── */
+@media (min-width: 576px) and (max-width: 767px) {
+
+    /* Banner */
+    .img             { height: 200px; }
+    .overlay-text h2 { font-size: 22px; }
+    .booking-box     { width: 90%; }
+
+    /* Services cards */
+    .cards           { grid-template-columns: 1fr 1fr; }
+    .cards .card img { height: 210px; }
+    .cards .card span{ left: 50%; transform: translateX(-50%); bottom: 80px; }
+
+    /* About */
+    .about-1         { flex-direction: column; gap: 20px; }
+    .img-box         { width: 280px; height: 280px; }
+    .about .right ul { grid-template-columns: 1fr; }
+    .about .right ul li { white-space: normal; }
+    .about .right button { width: 100%; padding: 10px 20px; }
+
+    /* Destination */
+    .destination .cards     { flex-direction: column; align-items: center; gap: 20px; }
+    .destination .content .image { width: 100%; max-width: 480px; height: 220px; }
+    .destination .content .price-paymentbtn { flex-direction: column; gap: 8px; }
+    .destination .content .price-paymentbtn button { width: 100%; padding: 10px 20px; }
+
+    /* Popular Events */
+    .pop-events .cards      { flex-direction: column; align-items: center; gap: 20px; }
+    .pop-events .cards .content .image { width: 100%; max-width: 480px; height: 280px; }
+
+    /* Choose Us */
+    .choose                 { flex-direction: column; gap: 25px; padding: 8% 5%; }
+    .choose .choose-image   { width: 100%; max-width: 100%; height: 260px; }
+    .choose-content .small-title { font-size: 18px; }
+    .choose-content .main-title  { font-size: 26px; }
+    .choose-content .features    { grid-template-columns: 1fr 1fr; }
+
+    /* Customers */
+    .customers       { padding: 40px 20px; }
+    .customers-title { font-size: 26px; }
+
+    /* CTA */
+    .cta             { height: auto; min-height: 280px; border-radius: 20px; padding: 30px 20px; }
+    .cta-content h1  { font-size: 26px; }
+    .buttons         { gap: 12px; }
+    .btn             { font-size: 14px; padding: 10px 22px; }
+
+    /* Owl nav */
+    .owl-nav button span { font-size: 26px !important; padding: 12px !important; }
+}
+
+
+/* ─── MD  ( 768px – 991px ) ───────────────────────────────── */
+@media (min-width: 768px) and (max-width: 991px) {
+
+    /* Banner */
+    .img             { height: 220px; }
+    .overlay-text h2 { font-size: 26px; }
+    .booking-box     { width: 85%; }
+
+    /* Services cards */
+    .cards           { grid-template-columns: repeat(2, 1fr); }
+
+    /* About */
+    .about-1         { flex-direction: column; gap: 25px; }
+    .img-box         { width: 320px; height: 320px; }
+    .about .right ul { grid-template-columns: 1fr 1fr; }
+    .about .right ul li { white-space: normal; }
+    .about .right button { padding: 10px 35px; }
+
+    /* Destination */
+    .destination .cards { flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .destination .content .image { width: 320px; height: 220px; }
+
+    /* Popular Events */
+    .pop-events .cards { flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .pop-events .cards .content .image { width: 260px; height: 260px; }
+
+    /* Choose Us */
+    .choose              { flex-direction: column; gap: 30px; padding: 7% 5%; }
+    .choose .choose-image{ width: 100%; max-width: 580px; height: 300px; }
+    .choose-content .main-title  { font-size: 28px; }
+    .choose-content .features    { grid-template-columns: 1fr 1fr; }
+
+    /* Customers */
+    .customers       { padding: 50px 25px; }
+    .customers-title { font-size: 28px; }
+
+    /* CTA */
+    .cta             { height: auto; min-height: 300px; border-radius: 22px; }
+    .cta-content h1  { font-size: 28px; }
+}
+
+
+/* ─── LG  ( 992px – 1199px ) ─────────────────────────────── */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+    /* Services cards */
+    .cards           { grid-template-columns: repeat(3, 1fr); }
+
+    /* Banner */
+    .booking-box     { width: 85%; }
+
+    /* About */
+    .img-box         { width: 380px; height: 380px; }
+    .about .right ul li { white-space: normal; }
+
+    /* Destination */
+    .destination .content .image { width: 280px; height: 220px; }
+
+    /* Popular Events */
+    .pop-events .cards .content .image { width: 270px; height: 270px; }
+
+    /* Choose Us */
+    .choose .choose-image { width: 400px; height: 340px; }
+    .choose-content .main-title { font-size: 30px; }
+
+    /* CTA */
+    .cta-content h1  { font-size: 30px; }
+}
+
+
+/* ─── XL  ( ≥ 1200px ) ───────────────────────────────────── */
+@media (min-width: 1200px) {
+
+    /* Services cards */
+    .cards           { grid-template-columns: repeat(4, 1fr); }
+    .booking-box     { width: 80%; }
+}
+
+
+/* ================================================
+   NAVBAR  — mobile
+================================================ */
+@media (max-width: 767px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .navbar .menu {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .navbar .menu a {
+        width: 100%;
+        padding: 10px;
+        border-bottom: 1px solid var(--color-accent-2);
+    }
+}

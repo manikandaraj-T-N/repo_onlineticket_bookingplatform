@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+
+</head>
+<body>
+    <!-- navbar -->
+    <div th:replace="fragments :: navbar"></div>
+
+    <!-- menus -->
+    <div th:replace="fragments :: booking-menus"></div>
+     
+
+     <!-- login form -->
+     <section class="login-container">
+        <div class="login-picture">
+            <img th:src="@{/images/loginpage.png}" alt="Login Picture">
+        </div>
+
+        <div class="login-form">
+            <h3>Welcome Back</h3>
+            <p>Sign in to continue booking</p>
+
+            <p th:if="${param.error}" style="color:red;">
+                 Invalid email or password
+            </p>
+            <form th:action="@{/login}" method="post">
+
+                <div class="email">
+                <label for="email">Email Address</label><br>
+                <i class="fa-solid fa-envelope"></i>
+                <input type="text" placeholder="mani@gmail.com" name="email" required> <br><br>
+                </div>
+                
+                <div class="pwd">
+                <label for="password">Password</label><br> 
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" placeholder="Enter 6 Digit Password" name="password" required><br><br>
+                </div>
+
+                <div class="checkbox-forgot">
+                    <div class="checkbox">
+                    <input type="checkbox" name="remember" id="remember">
+                    <label for="remember">Remember me</label>
+                   </div>
+
+                    <div class="forgot">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </div>
+
+                <div class="btn">
+                    <button type="submit">Login</button>
+                </div>
+                
+               
+            </form>
+            <div class="dont-acc">
+                <p>Don't have an account? </p>
+                <a href="/signup">Sign up</a>
+            </div>
+            <hr>
+            <p class="policy">By continuing, you agreed to BookAll's Terms of Services and Privacy Policy</p>
+        </div>
+     </section>
+
+     <!-- footer -->
+  <div th:replace="fragments :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,588 @@
+:root {
+  --color-primary: #032626;
+  --color-primary-2: #008080;
+  --color-secondary: #F44336;
+  --color-secondary-2: #FF6F61;
+  --color-accent: #FFB803;
+  --color-accent-2: #FFE236;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/Inter/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+/* ========================banner======================== */
+
+.banner{
+    position: relative;
+
+}
+.banner .banner-img{
+   width: 100%;
+   height: 400px;
+   overflow: hidden;
+}
+
+.banner .banner-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+
+    transform: scale(1);
+    /* animation: zoomIn 8s ease-in-out infinite alternate; */
+     animation: zoomPan 3s ease-in-out infinite alternate;
+}
+
+@keyframes zoomPan {
+    0% {
+        transform: scale(1) translateX(0);
+    }
+    100% {
+        transform: scale(1.15) translateX(-20px);
+    }
+}
+
+
+.banner .overlay-text, .banner .form{
+    position: absolute;
+}
+
+.banner .overlay-text{
+    background-color: rgba(0, 0, 0, 0.374);
+    color: white;
+    border-radius: 20px;
+   top: 115px;
+  left: 30%;
+    padding: 5px 100px;
+}
+
+.banner .overlay-text p{
+    font-size: 14px;
+}
+
+.banner .form{
+   bottom: -15px;
+    left: 20%;
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.banner .form form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    
+}
+
+.banner .form form input{
+    padding: 14px 16px;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    background: #f2f2f27a;
+    font-size: 14px;
+}
+
+.banner .form form button{
+    padding: 20px 60px;
+    background-color: var(--color-secondary-2);
+    color: white;
+    transition: all 0.3s ease-in-out;
+    white-space: nowrap;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.banner .form form button:hover{
+    background-color: var(--color-secondary);
+}
+
+
+/* ==========================cards and filters================ */
+/* MAIN LAYOUT */
+.movie-section {
+    display: flex;
+    gap: 25px;
+    padding: 30px 40px;
+    background: #f5f0eb;
+}
+
+/* FILTERS */
+.movie-filters {
+    width: 250px;
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    height: fit-content;
+}
+
+.movie-filter-header {
+    background: #e8412a;
+    padding: 18px;
+    text-align: center;
+}
+
+.movie-filter-header h2 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.movie-filter-group {
+    padding: 16px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.movie-filter-group:last-child { border-bottom: none; }
+
+.movie-filter-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.movie-filter-label h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+    color: #111;
+}
+
+.movie-filter-label i { font-size: 13px; color: #555; }
+
+.movie-filter-content {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.movie-filter-content.hidden { display: none; }
+
+.movie-radio, .movie-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.movie-radio input, .movie-check input {
+    accent-color: #e8412a;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.apply-btn {
+    width: calc(100% - 40px);
+    margin: 16px 20px;
+    padding: 12px;
+    background: #e8412a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* MOVIE CARDS */
+.movie-cards-section { flex: 1; }
+
+.movie-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.movie-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover { transform: translateY(-5px); }
+
+.movie-img {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.movie-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-img img { transform: scale(1.05); }
+
+.movie-status-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.movie-status-badge.now {
+    background: #e8412a;
+    color: #fff;
+}
+
+.movie-status-badge.soon {
+    background: #032626;
+    color: #fff;
+}
+
+.movie-info { padding: 16px; }
+
+.movie-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #111;
+}
+
+.movie-lang, .movie-release {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 4px;
+}
+
+.movie-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.movie-rating {
+    font-size: 13px;
+    color: #f5a623;
+    font-weight: 600;
+}
+
+.movie-rating i { color: #f5a623; }
+
+.movie-book-btn {
+    padding: 8px 18px;
+    background: #e8412a;
+    color: #fff;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.movie-book-btn:hover { background: #c7321d; }
+
+.movie-soon-btn {
+    padding: 8px 18px;
+    background: #032626;
+    color: #fff;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+
+
+
+/* ======================cta========================== */
+
+.cta {
+    position: relative;
+    height: 350px;
+    border-radius: 30px;
+    overflow: hidden;
+
+    background: url('/images/home/cta-bg.png') no-repeat center/cover;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.cta-1{
+    padding: 5%;
+}
+
+/* dark gradient overlay */
+.cta .overlay {
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 128, 128, 0.5)
+    );
+}
+
+/* content */
+.cta-content {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.cta-content h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.cta-content p {
+    font-size: 16px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+/* buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* common button */
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+/* red button */
+.btn.primary {
+    background: #ff6b5c;
+    color: white;
+}
+
+.btn.primary:hover {
+    background: #ff4a3d;
+}
+
+/* green button */
+.btn.secondary {
+    background: #0f766e;
+    color: white;
+}
+
+.btn.secondary:hover {
+    background: #0d5f59;
+}
+
+
+/* ========================= XS (0 - 575px) ========================= */
+@media (max-width: 575px) {
+
+    /* ===== Banner ===== */
+    .banner .banner-img { height: 220px; }
+
+    .banner .overlay-text {
+        top: 20%;
+        left: 5%;
+        width: 90%;
+        padding: 10px 15px;
+        text-align: center;
+    }
+
+    .banner .form {
+        position: static;
+        width: 95%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .banner .form form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .banner .form form input,
+    .banner .form form button {
+        width: 100%;
+    }
+
+    .banner .form form button { padding: 14px; }
+
+    /* ===== Movie Section ===== */
+    .movie-section {
+        flex-direction: column;
+        padding: 20px 15px;
+    }
+
+    .movie-filters {
+        width: 100%;
+    }
+
+    .movie-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .movie-img { height: 220px; }
+
+    /* ===== CTA ===== */
+    .cta {
+        height: auto;
+        padding: 30px 10px;
+    }
+
+    .cta-content h1 { font-size: 22px; }
+
+    .cta-content p { font-size: 14px; }
+
+    .buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn { width: 100%; }
+}
+
+
+/* ========================= SM (576px - 767px) ========================= */
+@media (min-width: 576px) and (max-width: 767px) {
+
+    .banner .banner-img { height: 260px; }
+
+    .banner .overlay-text {
+        left: 10%;
+        width: 80%;
+        padding: 10px 30px;
+    }
+
+    .banner .form {
+        position: static;
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .banner .form form {
+        flex-direction: column;
+    }
+
+    .movie-section {
+        flex-direction: column;
+    }
+
+    .movie-filters {
+        width: 100%;
+    }
+
+    .movie-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .movie-img { height: 240px; }
+}
+
+
+/* ========================= MD (768px - 991px) ========================= */
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .banner .overlay-text {
+        left: 20%;
+        padding: 10px 50px;
+    }
+
+    .banner .form {
+        left: 5%;
+        width: 90%;
+    }
+
+    .banner .form form {
+        flex-wrap: wrap;
+    }
+
+    .movie-section {
+        flex-direction: column;
+    }
+
+    .movie-filters {
+        width: 100%;
+    }
+
+    .movie-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .movie-img { height: 260px; }
+}
+
+
+/* ========================= LG (992px - 1199px) ========================= */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+    .banner .overlay-text {
+        left: 25%;
+        padding: 10px 70px;
+    }
+
+    .banner .form {
+        left: 10%;
+        width: 80%;
+    }
+
+    .movie-filters {
+        width: 220px;
+    }
+
+    .movie-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .movie-img { height: 280px; }
+}
+
+
+/* ========================= XL (1200px and above) ========================= */
+@media (min-width: 1200px) {
+
+    .banner .overlay-text {
+        left: 30%;
+    }
+
+    .banner .form {
+        left: 20%;
+    }
+
+    .movie-filters {
+        width: 250px;
+    }
+
+    .movie-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .movie-img { height: 300px; }
+}

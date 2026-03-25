@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Train Booking</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/hometrain.css}" />
+
+
+       <!-- ===========owl carousel css======== -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    </head>
+
+  <body>
+      <!-- navbar -->
+        <div th:replace="fragments :: navbar"></div>
+
+     <div th:replace="fragments :: booking-menus"></div>
+
+
+    <!-- BANNER -->
+    <section class="banner">
+        <div class="banner-img">
+            <img th:src="@{/images/hometrain/banner-train.png}" alt="">
+        </div>
+
+        <div class="overlay-text">
+            <h2>Search Trains</h2>
+            <p>Find the best trains at the best price</p>
+        </div>
+
+        <div class="form">
+            <form action="/trains" method="get">
+                <input type="text" name="from" placeholder="From Station" required>
+                <input type="text" name="to" placeholder="To Station" required>
+                <input type="date" name="date" required>
+                <button type="submit">Search Train</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FILTERS & CARDS -->
+    <section class="booking">
+
+        <form action="/trains" method="get">
+
+        <div class="filters">
+                <div class="filter-header">
+                    <h2>Filters</h2>
+                </div>
+
+                <div class="filter-body">
+
+                    <!-- Price Range -->
+                    <div class="filter-group">
+                        <div class="filter-label" onclick="toggleFilter('price')">
+                            <span>Price Range</span>
+                            <i class="fa-solid fa-chevron-up" id="icon-price"></i>
+                        </div>
+                        <div class="filter-content" id="price">
+                            <input type="range" id="maxPrice" min="200" max="3000" value="3000">
+                            <input type="hidden" id="maxPriceHidden" name="maxPrice" value="3000">
+                            <div class="range-labels">
+                                <span>₹200</span>
+                                <span>₹<span id="maxVal">3,000</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Departure Time -->
+                    <div class="filter-group">
+                        <div class="filter-label" onclick="toggleFilter('departure')">
+                            <span>Departure Time</span>
+                            <i class="fa-solid fa-chevron-down" id="icon-departure"></i>
+                        </div>
+
+                        <div class="filter-content hidden" id="departure">
+                            <label><input type="checkbox" name="departure" value="morning"> Morning (6AM - 12PM)</label>
+                            <label><input type="checkbox" name="departure" value="afternoon"> Afternoon (12PM - 6PM)</label>
+                            <label><input type="checkbox" name="departure" value="evening"> Evening (6PM - 12AM)</label>
+                        </div>
+                    </div>
+
+                    <!-- Train Type -->
+                    <div class="filter-group">
+                        <div class="filter-label" onclick="toggleFilter('traintype')">
+                            <span>Train Type</span>
+                            <i class="fa-solid fa-chevron-down" id="icon-traintype"></i>
+                        </div>
+                        <div class="filter-content hidden" id="traintype">
+                            <label><input type="checkbox" name="trainType" value="Rajdhani"> Rajdhani</label>
+                            <label><input type="checkbox" name="trainType" value="Shatabdi"> Shatabdi</label>
+                            <label><input type="checkbox" name="trainType" value="Superfast"> Superfast</label>
+                            <label><input type="checkbox" name="trainType" value="Duronto"> Duronto</label>
+                            <label><input type="checkbox" name="trainType" value="Express"> Express</label>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="from" th:value="${param.from}">
+                    <input type="hidden" name="to" th:value="${param.to}">
+                    <input type="hidden" name="date" th:value="${param.date}">
+
+                </div>
+            </div>
+
+            <button type="submit" class="apply-btn">Apply Filters</button>
+        </form>
+
+        <!-- TRAIN CARDS -->
+        <div class="availables">
+
+            <!-- <h2 th:if="${param.from != null and param.from != ''
+                     and param.to != null and param.to != ''
+                     and param.date != null and param.date != ''}">
+                Trains from
+                <span th:text="${param.from}"></span>
+                to
+                <span th:text="${param.to}"></span>
+                on
+                <span th:text="${param.date}"></span>
+            </h2> -->
+
+            <div class="card" th:each="train : ${trains}">
+
+                <div class="left">
+                    <div class="heading-icon">
+                        <div class="title">
+                            <h3 th:text="${train.trainName}"></h3>
+                            <p>Train No: <span th:text="${train.trainNumber}"></span></p>
+                            <p>Classes Available: Sleeper, 3AC, 2AC</p>
+                        </div>
+                    </div>
+
+                    <div class="dep-arri">
+                        <div class="dep">
+                            <p class="title">Departure</p>
+                            <p class="time" th:text="${train.departureTime}"></p>
+                            <p class="place" th:text="${train.fromPlace}"></p>
+                        </div>
+
+                        <div class="duration-center">
+                            <p><i class="fa-regular fa-clock"></i> <span th:text="${train.duration}"></span></p>
+                            <p th:text="${train.trainType}"></p>
+                        </div>
+
+                        <div class="arri">
+                            <p class="title">Arrival</p>
+                            <p class="time" th:text="${train.arrivalTime}"></p>
+                            <p class="place" th:text="${train.toPlace}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <p class="price">₹<span th:text="${train.price}"></span></p>
+                    <button>
+                        <a th:href="@{/trainbooking/{id}(id=${train.id})}">Book Now</a>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!--=================== popular routes ==========-->
+   <section class="train-popular-routes">
+    <h2 class="train-routes-title">Popular Routes</h2>
+
+    <div class="train-routes-banner">
+
+        <div class="train-route-card">
+            <a href="/trains?from=Chennai&to=Madurai" class="train-route-link">Chennai → Madurai</a>
+            <p><i class="fa-regular fa-clock"></i> 7h 10m</p>
+            <p><i class="fa-solid fa-train"></i> 12</p>
+        </div>
+
+        <div class="train-route-card">
+            <a href="/trains?from=Chennai&to=Coimbatore" class="train-route-link">Chennai → Coimbatore</a>
+            <p><i class="fa-regular fa-clock"></i> 6h 45m</p>
+            <p><i class="fa-solid fa-train"></i> 9</p>
+        </div>
+
+        <div class="train-route-card">
+            <a href="/trains?from=Madurai&to=Trichy" class="train-route-link">Madurai → Trichy</a>
+            <p><i class="fa-regular fa-clock"></i> 3h 20m</p>
+            <p><i class="fa-solid fa-train"></i> 6</p>
+        </div>
+
+        <div class="train-route-card">
+            <a href="/trains?from=Bangalore&to=Chennai" class="train-route-link">Bangalore → Chennai</a>
+            <p><i class="fa-regular fa-clock"></i> 5h 30m</p>
+            <p><i class="fa-solid fa-train"></i> 10</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ============customers=================== -->
+    <section class="customers">
+    <h2 class="customers-title">Happy Customers</h2>
+
+    <div class="owl-carousel owl-customers">
+
+        <div class="review-card">
+            <div class="review-top">
+                <img src="/images/hometrain/customer-1.jpeg" alt="Priya Sharma">
+                <p>"Booking my flight and concert tickets was incredibly easy with TicketVerse. Everything was in one place and the process was super fast."</p>
+            </div>
+            <div class="review-bottom">
+                <div class="review-info">
+                    <p class="name">Priya Sharma</p>
+                    <p class="location">Chennai, India</p>
+                </div>
+                <div class="quote-icon"><span><i class="fa-solid fa-quote-left"></i></span></div>
+            </div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-top">
+                <img src="/images/home/customer-1.jpeg" alt="Arjun Patel">
+                <p>"I booked IPL match tickets through TicketVerse and the experience was seamless. The interface is clean and very easy to use."</p>
+            </div>
+            <div class="review-bottom">
+                <div class="review-info">
+                    <p class="name">Arjun Patel</p>
+                    <p class="location">Ahmedabad, India</p>
+                </div>
+                <div class="quote-icon"><span><i class="fa-solid fa-quote-left"></i></span></div>
+            </div>
+        </div>
+
+   
+
+    </div>
+</section>
+
+    <!--==============cta===================  -->
+    <div class="cta-1">
+        <section class="cta">
+            <div class="overlay"></div>
+            <div class="cta-content">
+                <p class="heading">Ready to Book Your Train?</p>
+                <p>Search thousands of trains and find the best deal for your journey.</p>
+                <div class="buttons">
+                    <button class="btn primary">Search Trains</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div th:replace="~{fragments :: footer}"></div>
+
+    <!-- SCRIPTS -->
+    <script>
+    const maxRange = document.getElementById("maxPrice");
+    const maxVal = document.getElementById("maxVal");
+    const maxHidden = document.getElementById("maxPriceHidden");
+
+    maxRange.addEventListener("input", () => {
+        maxVal.innerText = parseInt(maxRange.value).toLocaleString();
+        maxHidden.value = maxRange.value;
+    });
+
+    function toggleFilter(id) {
+        const content = document.getElementById(id);
+        const icon = document.getElementById('icon-' + id);
+        content.classList.toggle('hidden');
+        icon.classList.toggle('fa-chevron-down');
+        icon.classList.toggle('fa-chevron-up');
+    }
+
+    document.querySelectorAll('.filter-content input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', () => {
+            document.querySelector('form').submit();
+        });
+    });
+    </script>
+
+                <!-- =owl carousel= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+<script th:src="@{js/owl.js}"></script>
+</body>
+
+    </html>

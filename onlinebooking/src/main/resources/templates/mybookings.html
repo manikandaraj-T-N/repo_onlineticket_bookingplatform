@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   
+    
+      <link rel="stylesheet" th:href="@{/css/mybooking.css}" />
+
+       <link rel="stylesheet" th:href="@{/css/login.css}" />
+
+</head>
+<body>
+
+  <!-- navbar -->
+    <div th:replace="fragments :: navbar"></div>
+
+     <div th:replace="fragments :: booking-menus"></div>
+
+<div class="page-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-header">Profile</div>
+
+        <div class="profile-info">
+            <div class="profile-img">
+                <img src="/images/default-avatar.png" alt="Profile">
+                <div class="add-btn"><i class="fa-solid fa-plus"></i></div>
+            </div>
+            <div class="profile-name" th:text="${username}">User</div>
+        </div>
+
+        <div class="sidebar-menu">
+            <a href="/my-bookings" class="menu-item active">
+                <i class="fa-regular fa-calendar"></i> My Bookings
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fa-regular fa-bookmark"></i> Saved Trips
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fa-regular fa-bell"></i> Notifications
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fa-regular fa-circle-question"></i> Help & Support
+            </a>
+            <form th:action="@{/logout}" method="post" id="logoutForm" style="margin:0;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        </form>
+        <a href="#" class="menu-item" onclick="document.getElementById('logoutForm').submit()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign out
+        </a>
+        </div>
+    </div>
+
+<!-- =================bookings================ -->
+
+    <div class="main-content">
+    <h2 class="page-title">My Bookings</h2>
+
+    <!-- Stats -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Total Bookings</div>
+                <div class="stat-value" th:text="${totalBookings}">0</div>
+            </div>
+            <div class="stat-icon">📅</div>
+        </div>
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Confirmed</div>
+                <div class="stat-value" th:text="${confirmed}">0</div>
+            </div>
+            <div class="stat-icon" style="color:#1a9e8f;">✅</div>
+        </div>
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Pending</div>
+                <div class="stat-value" th:text="${pending}">0</div>
+            </div>
+            <div class="stat-icon" style="color:#e8412a;">⏰</div>
+        </div>
+    </div>
+
+    <!-- TABS -->
+   <div class="booking-tabs">
+    <button class="tab-btn active" onclick="showTab('all', this)">
+        <i class="fa-solid fa-grip"></i> All
+    </button>
+    <button class="tab-btn" onclick="showTab('flight', this)">
+        <i class="fa-solid fa-plane"></i> Flights
+    </button>
+    <button class="tab-btn" onclick="showTab('train', this)">
+        <i class="fa-solid fa-train"></i> Trains
+    </button>
+    <button class="tab-btn" onclick="showTab('bus', this)">
+        <i class="fa-solid fa-bus"></i> Bus
+    </button>
+    <button class="tab-btn" onclick="showTab('activity', this)">
+        <i class="fa-solid fa-person-hiking"></i> Activities
+    </button>
+    <button class="tab-btn" onclick="showTab('sport', this)">
+        <i class="fa-solid fa-futbol"></i> Sports
+    </button>
+    <button class="tab-btn" onclick="showTab('event', this)">
+        <i class="fa-solid fa-calendar-days"></i> Events
+    </button>
+    <button class="tab-btn" onclick="showTab('movie', this)">
+        <i class="fa-solid fa-film"></i> Movies
+    </button>
+    <button class="tab-btn" onclick="showTab('hotel', this)">
+        <i class="fa-solid fa-hotel"></i> Hotels
+    </button>
+</div>
+
+    <!-- No bookings -->
+    <div th:if="${totalBookings == 0}" class="no-bookings">
+        <i class="fa-regular fa-calendar-xmark" style="font-size:40px; margin-bottom:15px;"></i>
+        <p>No bookings yet. Start exploring!</p>
+    </div>
+
+    <!-- Flight Bookings -->
+    <div class="booking-group" id="group-flight">
+        <div th:each="item : ${flightDetails}" class="booking-card" data-type="flight">
+            <div class="booking-icon" style="background:#1a9e8f;">
+                <i class="fa-solid fa-plane"></i>
+            </div>
+            <div class="booking-info">
+                <div class="booking-top">
+                    <div class="booking-title">
+                        Flight to <span th:text="${item.flight.toPlace}"></span>
+                    </div>
+                    <div>
+                        <div th:class="${item.booking.bookingStatus == 'Confirmed'} ? 'booking-status confirmed' :
+               (${item.booking.bookingStatus == 'Cancelled'} ? 'booking-status cancelled' :
+               'booking-status pending')"
+     th:text="${item.booking.bookingStatus}">
+</div>
+                        <div class="booking-price">₹<span th:text="${item.flight.price}"></span></div>
+                    </div>
+                </div>
+                <div class="booking-sub">
+                    <span th:text="${item.flight.airline}"></span> •
+                    <span th:text="${item.flight.fromPlace}"></span> →
+                    <span th:text="${item.flight.toPlace}"></span>
+                </div>
+                <div class="booking-date" th:text="${item.booking.bookingDate}"></div>
+                <div class="booking-actions">
+                    <div class="action-btns">
+                        <a th:href="@{/booking/download/{id}(id=${item.booking.id})}" class="btn-download">
+                            <i class="fa-solid fa-download"></i> Download Ticket
+                        </a>
+                        <form th:action="@{/booking/cancel/{id}(id=${item.booking.id})}" method="post">
+    <button type="submit" class="btn-cancel"
+            th:disabled="${item.booking.bookingStatus == 'Cancelled'}"
+            onclick="return confirm('Cancel this booking?')">
+        Cancel
+    </button>
+</form>
+                    </div>
+                    <a th:href="@{/booking/detail/{id}(id=${item.booking.id})}" class="btn-view">View Details</a>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(flightDetails)}" class="empty-tab">
+            <p>No flight bookings yet.</p>
+        </div>
+    </div>
+
+    <!-- Train Bookings -->
+     <div class="booking-group" id="group-train">
+        <div th:each="item : ${trainDetails}" class="booking-card" data-type="train">
+            <div class="booking-icon" style="background:#032626;">
+                <i class="fa-solid fa-train"></i>
+            </div>
+            <div class="booking-info">
+                <div class="booking-top">
+                    <div class="booking-title">
+                        <span th:text="${item.train.trainName}"></span>
+                    </div>
+                    <div>
+                        <div th:class="${item.booking.bookingStatus == 'Confirmed'} ? 'booking-status confirmed' :
+               (${item.booking.bookingStatus == 'Cancelled'} ? 'booking-status cancelled' :
+               'booking-status pending')"
+     th:text="${item.booking.bookingStatus}">
+</div>
+                        <div class="booking-price">₹<span th:text="${item.train.price}"></span></div>
+                    </div>
+                </div>
+                <div class="booking-sub">
+                    <span th:text="${item.train.fromPlace}"></span> →
+                    <span th:text="${item.train.toPlace}"></span>
+                </div>
+                <div class="booking-date" th:text="${item.booking.bookingDate}"></div>
+                <div class="booking-actions">
+                    <div class="action-btns">
+                       <a th:href="@{/trainbooking/download/{id}(id=${item.booking.id})}" class="btn-download">
+    <i class="fa-solid fa-download"></i> Download Ticket
+    </a>
+                       <form th:action="@{/trainbooking/cancel/{id}(id=${item.booking.id})}" method="post">
+                        <button type="submit" class="btn-cancel"
+                                th:disabled="${item.booking.bookingStatus == 'Cancelled'}"
+                                onclick="return confirm('Cancel this booking?')">
+                            Cancel
+                        </button>
+        </form>
+
+        <a th:href="@{/trainbooking/detail/{id}(id=${item.booking.id})}" class="btn-view">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(trainDetails)}" class="empty-tab">
+            <p>No train bookings yet.</p>
+        </div>
+    </div>
+
+    <!-- Bus Bookings -->
+    <div class="booking-group" id="group-bus">
+        <div th:each="item : ${busDetails}" class="booking-card" data-type="bus">
+            <div class="booking-icon" style="background:#e8412a;">
+                <i class="fa-solid fa-bus"></i>
+            </div>
+            <div class="booking-info">
+                <div class="booking-top">
+                    <div class="booking-title" th:text="${item.bus.busName}"></div>
+                    <div>
+                       <div th:class="${item.booking.bookingStatus == 'Confirmed'} ? 'booking-status confirmed' :
+               (${item.booking.bookingStatus == 'Cancelled'} ? 'booking-status cancelled' :
+               'booking-status pending')"
+     th:text="${item.booking.bookingStatus}">
+</div>
+                        <div class="booking-price">₹<span th:text="${item.bus.price}"></span></div>
+                    </div>
+                </div>
+                <div class="booking-sub">
+                    <span th:text="${item.bus.fromPlace}"></span> →
+                    <span th:text="${item.bus.toPlace}"></span>
+                </div>
+                <div class="booking-date" th:text="${item.booking.bookingDate}"></div>
+                <div class="booking-actions">
+                    <div class="action-btns">
+                        <a th:href="@{/busbooking/download/{id}(id=${item.booking.id})}" class="btn-download">
+    <i class="fa-solid fa-download"></i> Download Ticket
+</a>
+<form th:action="@{/busbooking/cancel/{id}(id=${item.booking.id})}" method="post">
+    <button type="submit" class="btn-cancel"
+            th:disabled="${item.booking.bookingStatus == 'Cancelled'}"
+            onclick="return confirm('Cancel this booking?')">
+        Cancel
+    </button>
+</form>         
+
+<a th:href="@{/busbooking/detail/{id}(id=${item.booking.id})}" class="btn-view">View Details</a>
+
+</div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(busDetails)}" class="empty-tab">
+            <p>No bus bookings yet.</p>
+        </div>
+    </div>
+
+    <!-- Movie Bookings -->
+    <div class="booking-group" id="group-movie">
+    <div th:each="item : ${movieDetails}" class="booking-card" data-type="movie">
+        <div class="booking-icon" style="background:#e74c3c;">
+            <i class="fa-solid fa-film"></i>
+        </div>
+        <div class="booking-info">
+            <div class="booking-top">
+                <div class="booking-title" th:text="${item.movie.title}"></div>
+                <div>
+                    <div th:class="${item.booking.bookingStatus == 'Confirmed'} ? 'booking-status confirmed' :
+               (${item.booking.bookingStatus == 'Cancelled'} ? 'booking-status cancelled' :
+               'booking-status pending')"
+     th:text="${item.booking.bookingStatus}">
+</div>
+                    <div class="booking-price">₹<span th:text="${item.movie.price * item.booking.tickets}"></span></div>
+                </div>
+            </div>
+            <div class="booking-sub">
+                <span th:text="${item.movie.language}"></span> •
+                <span th:text="${item.movie.genre}"></span>
+            </div>
+            <div class="booking-date" th:text="${item.booking.bookingDate}"></div>
+            <div class="booking-actions">
+                <div class="action-btns">
+                    <a th:href="@{/moviebooking/download/{id}(id=${item.booking.id})}" class="btn-download">
+                        <i class="fa-solid fa-download"></i> Download Ticket
+                    </a>
+                    <form th:action="@{/moviebooking/cancel/{id}(id=${item.booking.id})}" method="post">
+    <button type="submit" class="btn-cancel"
+            th:disabled="${item.booking.bookingStatus == 'Cancelled'}"
+            onclick="return confirm('Cancel this booking?')">
+        Cancel
+    </button>
+</form>
+
+<a th:href="@{/moviebooking/detail/{id}(id=${item.booking.id})}" class="btn-view">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${#lists.isEmpty(movieDetails)}" class="empty-tab">
+        <p>No movie bookings yet.</p>
+    </div>
+    </div>
+
+        <!-- Event Bookings -->
+<div class="booking-group" id="group-event">
+    <div th:each="item : ${eventDetails}" class="booking-card" data-type="event">
+        <div class="booking-icon" style="background:#8e44ad;">
+            <i class="fa-solid fa-calendar-days"></i>
+        </div>
+        <div class="booking-info">
+            <div class="booking-top">
+                <div class="booking-title" th:text="${item.event.name}"></div>
+                <div>
+                   <div th:class="${item.booking.bookingStatus == 'Confirmed'} ? 'booking-status confirmed' :
+               (${item.booking.bookingStatus == 'Cancelled'} ? 'booking-status cancelled' :
+               'booking-status pending')"
+     th:text="${item.booking.bookingStatus}">
+</div>
+                    <div class="booking-price">₹<span th:text="${item.event.price}"></span></div>
+                </div>
+            </div>
+            <div class="booking-sub">
+                <span th:text="${item.event.category}"></span> •
+                <span th:text="${item.event.city}"></span>
+            </div>
+            <div class="booking-date" th:text="${item.booking.bookingDate}"></div>
+            <div class="booking-actions">
+                <div class="action-btns">
+                    <a th:href="@{/eventbooking/download/{id}(id=${item.booking.id})}" class="btn-download">
+                        <i class="fa-solid fa-download"></i> Download Ticket
+                    </a>
+                   <form th:action="@{/eventbooking/cancel/{id}(id=${item.booking.id})}" method="post">
+    <button type="submit" class="btn-cancel"
+            th:disabled="${item.booking.bookingStatus == 'Cancelled'}"
+            onclick="return confirm('Cancel this booking?')">
+        Cancel
+    </button>
+</form>
+
+<a th:href="@{/eventbooking/detail/{id}(id=${item.booking.id})}" class="btn-view">View Details</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${#lists.isEmpty(eventDetails)}" class="empty-tab">
+        <p>No event bookings yet.</p>
+    </div>
+</div>
+
+    <!-- Activity Bookings -->
+    <div class="booking-group" id="group-activity">
+        <div th:each="item : ${activityDetails}" class="booking-card" data-type="activity">
+            <div class="booking-icon" style="background:#f5a623;">
+                <i class="fa-solid fa-person-hiking"></i>
+            </div>
+            <div class="booking-info">
+                <div class="booking-top">
+                    <div class="booking-title" th:text="${item.activity.name}"></div>
+                    <div>
+                       <div th:class="${item.booking.bookingStatus == 'Confirmed'} ? 'booking-status confirmed' :
+               (${item.booking.bookingStatus == 'Cancelled'} ? 'booking-status cancelled' :
+               'booking-status pending')"
+     th:text="${item.booking.bookingStatus}">
+</div>
+                        <div class="booking-price">₹<span th:text="${item.activity.price}"></span></div>
+                    </div>
+                </div>
+                <div class="booking-sub" th:text="${item.activity.city}"></div>
+                <div class="booking-date" th:text="${item.booking.bookingDate}"></div>
+                <div class="booking-actions">
+                    <div class="action-btns">
+                        <button class="btn-download">
+                            <i class="fa-solid fa-download"></i> Download Ticket
+                        </button>
+                        <form th:action="@{/activitybooking/cancel/{id}(id=${item.booking.id})}" method="post">
+    <button type="submit" class="btn-cancel"
+            th:disabled="${item.booking.bookingStatus == 'Cancelled'}"
+            onclick="return confirm('Cancel this booking?')">
+        Cancel
+    </button>
+</form>
+
+<a th:href="@{/activitybooking/detail/{id}(id=${item.booking.id})}" class="btn-view">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(activityDetails)}" class="empty-tab">
+            <p>No activity bookings yet.</p>
+        </div>
+    </div>
+
+    <!-- Sport Bookings -->
+    <div class="booking-group" id="group-sport">
+        <div th:each="item : ${sportDetails}" class="booking-card" data-type="sport">
+            <div class="booking-icon" style="background:#1a9e8f;">
+                <i class="fa-solid fa-futbol"></i>
+            </div>
+            <div class="booking-info">
+                <div class="booking-top">
+                    <div class="booking-title" th:text="${item.sport.name}"></div>
+                    <div>
+                        <div th:class="${item.booking.bookingStatus == 'Confirmed'} ? 'booking-status confirmed' :
+               (${item.booking.bookingStatus == 'Cancelled'} ? 'booking-status cancelled' :
+               'booking-status pending')"
+     th:text="${item.booking.bookingStatus}">
+</div>
+                        <div class="booking-price">₹<span th:text="${item.sport.price}"></span></div>
+                    </div>
+                </div>
+                <div class="booking-sub" th:text="${item.sport.city}"></div>
+                <div class="booking-date" th:text="${item.booking.bookingDate}"></div>
+                <div class="booking-actions">
+                    <div class="action-btns">
+                        <button class="btn-download">
+                            <i class="fa-solid fa-download"></i> Download Ticket
+                        </button>
+                        <form th:action="@{/sportbooking/cancel/{id}(id=${item.booking.id})}" method="post">
+    <button type="submit" class="btn-cancel"
+            th:disabled="${item.booking.bookingStatus == 'Cancelled'}"
+            onclick="return confirm('Cancel this booking?')">
+        Cancel
+    </button>
+</form>
+
+<a th:href="@{/sportbooking/detail/{id}(id=${item.booking.id})}" class="btn-view">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(sportDetails)}" class="empty-tab">
+            <p>No sport bookings yet.</p>
+        </div>
+    </div>
+
+    <!-- Hotel Bookings -->
+    <div class="booking-group" id="group-hotel">
+        <div th:each="item : ${hotelDetails}" class="booking-card" data-type="hotel">
+            <div class="booking-icon" style="background:#16a085;">
+                <i class="fa-solid fa-hotel"></i>
+            </div>
+            <div class="booking-info">
+                <div class="booking-top">
+                    <div class="booking-title" th:text="${item.hotel.name}"></div>
+                    <div>
+                        <div th:class="${item.booking.bookingStatus == 'Confirmed'} ? 'booking-status confirmed' :
+               (${item.booking.bookingStatus == 'Cancelled'} ? 'booking-status cancelled' :
+               'booking-status pending')"
+     th:text="${item.booking.bookingStatus}">
+</div>
+                        <div class="booking-price">₹<span th:text="${item.booking.totalPrice}"></span></div>
+                    </div>
+                </div>
+                <div class="booking-sub">
+                    <span th:text="${item.hotel.city}"></span> •
+                    <span th:text="${item.booking.nights}"></span> Night(s)
+                </div>
+                <div class="booking-date" th:text="${item.booking.bookingDate}"></div>
+                <div class="booking-actions">
+                    <div class="action-btns">
+                        <a th:href="@{/hotelbooking/download/{id}(id=${item.booking.id})}" class="btn-download">
+                            <i class="fa-solid fa-download"></i> Download Booking
+                        </a>
+                        <form th:action="@{/hotelbooking/cancel/{id}(id=${item.booking.id})}" method="post">
+                        <button type="submit" class="btn-cancel"
+                                th:disabled="${item.booking.bookingStatus == 'Cancelled'}"
+                                onclick="return confirm('Cancel this booking?')">
+                            Cancel
+                        </button>
+                    </form>
+
+                  <a th:href="@{/hotelbooking/detail/{id}(id=${item.booking.id})}" class="btn-view">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(hotelDetails)}" class="empty-tab">
+            <p>No hotel bookings yet.</p>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+   <!-- =============footer ======================-->
+  <div th:replace="fragments :: footer"></div>
+
+
+<!-- script -->
+ <script>
+    function showTab(type, el) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.booking-group').forEach(g => g.classList.remove('active'));
+
+    if (type === 'all') {
+        document.querySelectorAll('.booking-group').forEach(g => g.classList.add('active'));
+    } else {
+        document.getElementById('group-' + type).classList.add('active');
+    }
+}
+
+window.onload = () => {
+    document.querySelectorAll('.booking-group').forEach(g => g.classList.add('active'));
+};
+ </script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Hotel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+<link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/hotelbooking.css}" />
+
+</head>
+<body>
+
+<div th:replace="~{fragments :: navbar}"></div>
+<div th:replace="~{fragments :: booking-menus}"></div>
+
+<div class="book-banner">Book Your Hotel</div>
+
+<div class="booking-layout">
+
+    <!-- FORM -->
+    <div class="passenger-box">
+        <div class="box-header">Guest Info</div>
+        <div class="box-body">
+            <form id="bookingForm" th:action="@{/hotelbooking/confirm}" method="post">
+
+                <input type="hidden" name="hotelId" th:value="${hotel.id}">
+                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> 
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" name="firstName" placeholder="First Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" name="lastName" placeholder="Last Name" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="tel" name="phone" placeholder="Phone Number" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Guests</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-users"></i>
+                            <input type="number" name="guests" min="1" max="10" value="1" required>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="section-title">Stay Details</p>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Check In</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-calendar"></i>
+                            <input type="date" name="checkIn" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Check Out</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-calendar"></i>
+                            <input type="date" name="checkOut" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="submit-btn" onclick="openPayment()">
+                    Continue to Payment →
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- HOTEL INFO -->
+    <div class="booking-info-box">
+        <div class="box-header">Hotel Info</div>
+        <img th:src="@{'/images/homehotels/' + ${hotel.image}}" class="hotel-info-img" alt="">
+        <div class="info-body">
+            <h3 th:text="${hotel.name}"></h3>
+
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-location-dot"></i> City</span>
+                <span class="value" th:text="${hotel.city}"></span>
+            </div>
+            <div class="info-row">
+                <span class="label">Category</span>
+                <span class="value" th:text="${hotel.category}"></span>
+            </div>
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-star" style="color:#f5a623"></i> Rating</span>
+                <span class="value" th:text="${hotel.rating}"></span>
+            </div>
+
+            <div class="amenity-tags">
+                <!-- split amenities by comma -->
+                <span th:each="amenity : ${hotel.amenities.split(',')}"
+                      class="amenity-tag"
+                      th:text="${amenity.trim()}">
+                </span>
+            </div>
+
+            <div class="price-row">
+                <span class="total-label">Price per night</span>
+              <span th:text="${hotel.pricePerNight}"></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Payment Modal -->
+<div class="modal-overlay" id="paymentModal">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closePayment()">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </button>
+        <div class="modal-left">
+            <div class="pay-method active" onclick="switchMethod(this, 'credit')">Credit Card</div>
+            <div class="pay-method" onclick="switchMethod(this, 'netbanking')">Net Banking</div>
+            <div class="pay-method" onclick="switchMethod(this, 'upi')">UPI</div>
+        </div>
+        <div class="modal-divider"></div>
+        <div class="modal-right">
+            <div class="pay-form active" id="credit">
+                <div class="pay-field">
+                    <label>Card Number<span>*</span></label>
+                    <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+                </div>
+                <div class="pay-row">
+                    <div class="pay-field">
+                        <label>Expiry Date<span>*</span></label>
+                        <input type="text" placeholder="MM/YYYY" maxlength="7">
+                    </div>
+                    <div class="pay-field">
+                        <label>CVV<span>*</span></label>
+                        <input type="text" placeholder="000" maxlength="3">
+                    </div>
+                </div>
+            </div>
+            <div class="pay-form" id="netbanking">
+                <div class="pay-field">
+                    <label>Select Bank<span>*</span></label>
+                    <select>
+                        <option value="" disabled selected>Choose your bank</option>
+                        <option>SBI</option><option>HDFC</option>
+                        <option>ICICI</option><option>Axis Bank</option><option>Kotak</option>
+                    </select>
+                </div>
+                <div class="pay-field">
+                    <label>User ID<span>*</span></label>
+                    <input type="text" placeholder="Enter Net Banking User ID">
+                </div>
+            </div>
+            <div class="pay-form" id="upi">
+                <div class="pay-field">
+                    <label>UPI ID<span>*</span></label>
+                    <input type="text" placeholder="yourname@upi">
+                </div>
+            </div>
+            <button class="pay-now-btn" onclick="submitPayment()">Pay Now</button>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+<script>
+function openPayment() {
+    const form = document.getElementById('bookingForm');
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    document.getElementById('paymentModal').classList.add('open');
+}
+function closePayment() { document.getElementById('paymentModal').classList.remove('open'); }
+function switchMethod(el, id) {
+    document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('active'));
+    document.querySelectorAll('.pay-form').forEach(f => f.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById(id).classList.add('active');
+}
+function submitPayment() {
+    const activeForm = document.querySelector('.pay-form.active');
+    const inputs = activeForm.querySelectorAll('input, select');
+    let valid = true;
+    inputs.forEach(input => {
+        if (input.value.trim() === '') {
+            input.style.border = '1.5px solid red';
+            valid = false;
+        } else {
+            input.style.border = '1px solid #ddd';
+        }
+    });
+    if (!valid) return;
+    document.getElementById('bookingForm').submit();
+}
+</script>
+
+</body>
+</html>

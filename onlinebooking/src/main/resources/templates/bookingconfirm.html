@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Flight Booking Confirmed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   
+     <link rel="stylesheet" th:href="@{/css/bookingconfirm.css}" />
+</head>
+<body>
+
+<div class="confirm-card">
+
+    <div class="confirm-top">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>Booking Confirmed!</h2>
+        <p>Your ticket has been successfully booked. Safe travels!</p>
+    </div>
+
+    <div class="confirm-body">
+
+        <!-- Reference -->
+        <div class="ref-row">
+            <span class="ref-label">Booking Reference</span>
+            <span class="ref-value">BK-<span th:text="${booking.id}"></span></span>
+        </div>
+        <div class="ref-row">
+            <span class="ref-label">Booking Date</span>
+            <span class="ref-value" th:text="${#dates.format(#dates.createNow(), 'MMMM d, yyyy')}"></span>
+        </div>
+
+        <!-- Booking Details -->
+        <p class="sec-title">Booking Details</p>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-plane"></i></div>
+            <div class="text">
+                <h4>Flight to <span th:text="${flight.toPlace}"></span></h4>
+                <p th:text="${flight.airline}"></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-regular fa-calendar"></i></div>
+            <div class="text">
+                <h4 th:text="${flight.travelDate}"></h4>
+                <p><span th:text="${flight.departureTime}"></span> - <span th:text="${flight.arrivalTime}"></span></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="text">
+                <h4>Route</h4>
+                <p><span th:text="${flight.fromPlace}"></span> -to- <span th:text="${flight.toPlace}"></span></p>
+            </div>
+        </div>
+
+        <div class="detail-item">
+    <div class="icon"><i class="fa-solid fa-chair"></i></div>
+    <div class="text">
+        <h4>Selected Seats</h4>
+        <p th:text="${booking.selectedSeats}"></p>
+    </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Total -->
+        <div class="total-row">
+            <span>Total Amount Paid</span>
+            <span class="total-price">₹<span th:text="${flight.price * booking.passengers}"></span></span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-row">
+            
+            <a th:href="@{/booking/download/{id}(id=${booking.id})}" class="btn-download">
+            <i class="fa-solid fa-download"></i> Download Ticket
+            </a>
+
+            <a href="/homeflight" class="btn-home">← Back to Flights</a>
+        </div>
+
+        <p class="email-note">A confirmation email has been sent to your registered email address</p>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home|Sports Booking</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/homesports.css}" />
+
+
+       <!-- ===========owl carousel css======== -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    </head>
+
+    <body>
+        <!-- navbar -->
+        <div th:replace="fragments :: navbar"></div>
+
+     <div th:replace="fragments :: booking-menus"></div>
+
+
+      <!-- ============banner=========== -->
+<section class="banner">
+
+    <div class="banner-img">
+        <img th:src="@{/images/homesports/banner-sports.png}" alt="">
+    </div>
+
+    <div class="overlay-text">
+        <h2> Book Tickets for Live Sports</h2>
+        <p>xperience the thrill of live spoers events. Find tickets for cricket,football, <br> basketball, and more happening near you</p>
+    </div>
+
+        <!-- FORM-->
+        <div class="form">
+    <form action="/sports" method="get">
+        <button type="submit">Explore Sports Events</button>
+
+    </form>
+</div>
+
+</section>
+
+<!-- ==========filters========== -->
+ <section class="sports-section">
+
+    <!-- FILTERS SIDEBAR -->
+    <div class="sport-filters">
+        <div class="sport-filter-header">
+            <h2>Filters</h2>
+        </div>
+
+        <!-- Price Range -->
+        <div class="sport-filter-group">
+            <div class="sport-filter-label" onclick="toggleSportFilter('price')">
+                <h3>Price Range</h3>
+                <i class="fa-solid fa-chevron-up" id="icon-sport-price"></i>
+            </div>
+            <div class="sport-filter-content" id="sport-price">
+                <input type="range" id="sportPriceRange" min="200" max="3000" value="3000">
+                <div class="sport-range-labels">
+                    <span>₹<span id="sportMinVal">200</span></span>
+                    <span>₹<span id="sportMaxVal">3,000</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sports Type -->
+        <div class="sport-filter-group">
+            <div class="sport-filter-label" onclick="toggleSportFilter('sporttype')">
+                <h3>Sports Type</h3>
+                <i class="fa-solid fa-chevron-down" id="icon-sport-sporttype"></i>
+            </div>
+            <div class="sport-filter-content hidden" id="sport-sporttype">
+                <label class="sport-radio">
+                    <input type="radio" name="sporttype" value="all" checked> All
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sporttype" value="Cricket"> Cricket
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sporttype" value="Football"> Football
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sporttype" value="Basketball"> Basketball
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sporttype" value="Tennis"> Tennis
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sporttype" value="Kabaddi"> Kabaddi
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sporttype" value="Badminton"> Badminton
+                </label>
+            </div>
+        </div>
+
+        <!-- City -->
+        <div class="sport-filter-group">
+            <div class="sport-filter-label" onclick="toggleSportFilter('sportcity')">
+                <h3>City</h3>
+                <i class="fa-solid fa-chevron-down" id="icon-sport-sportcity"></i>
+            </div>
+            <div class="sport-filter-content hidden" id="sport-sportcity">
+                <label class="sport-radio">
+                    <input type="radio" name="sportcity" value="all" checked> All
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sportcity" value="Chennai"> Chennai
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sportcity" value="Bangalore"> Bangalore
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sportcity" value="Hyderabad"> Hyderabad
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sportcity" value="Delhi"> Delhi
+                </label>
+                <label class="sport-radio">
+                    <input type="radio" name="sportcity" value="Mumbai"> Mumbai
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- SPORT CARDS -->
+    <div class="sport-cards-section">
+        <h2 class="sport-section-title">Upcoming Matches</h2>
+        <div class="sport-cards" id="sportCards">
+
+            <div class="sport-card" th:each="sport : ${sports}"
+                 th:data-price="${sport.price}"
+                 th:data-category="${sport.category}"
+                 th:data-city="${sport.city}">
+
+                <div class="sport-img">
+                    <img th:src="@{'/images/homesports/' + ${sport.image}}" alt="">
+                    <div class="sport-badge" th:text="${sport.category}"></div>
+                </div>
+
+                <div class="sport-info">
+                    <h3 th:text="${sport.name}"></h3>
+
+                    <div class="sport-detail">
+                        <i class="fa-solid fa-users"></i>
+                        <span th:text="${sport.matchTeams}"></span>
+                    </div>
+                    <div class="sport-detail">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span th:text="${sport.eventDate}"></span>
+                    </div>
+                    <div class="sport-detail">
+                        <i class="fa-regular fa-clock"></i>
+                        <span th:text="${sport.eventTime}"></span>
+                    </div>
+                    <div class="sport-detail">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span th:text="${sport.venue + ', ' + sport.city}"></span>
+                    </div>
+
+                    <div class="sport-bottom">
+                        <span class="sport-price">₹<span th:text="${sport.price}"></span></span>
+                        <a th:href="@{/sportbooking/{id}(id=${sport.id})}" class="sport-btn">Book Ticket</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<!-- ==================featured match========== -->
+<div class="feat-1">
+<section class="feat">
+    <div class="overlay"></div>
+
+    <div class="feat-content">
+        <h1>India VS Pakistan</h1>
+        <p>
+           03 May 2026 | 7:30PM |Narendra Modi Stadium,Ahmedabad
+        </p>
+
+        <p>Most Powerfull Match, More Hopes on India.</p>
+
+        <div class="buttons">
+            <button class="btn primary">Views Details</button>
+            <button class="btn secondary">Book Tickets</button>
+        </div>
+    </div>
+</section>
+</div>
+
+
+<!-- ==================cta========== -->
+<div class="cta-1">
+<section class="cta">
+    <div class="overlay"></div>
+
+    <div class="cta-content">
+        <h1>Don't Miss the Live Sports Action</h1>
+        <p>
+            Book tickets for concets, festivals, and workshops happening near You
+        </p>
+
+        <div class="buttons">
+            <button class="btn primary">Find Tickets</button>
+        </div>
+    </div>
+</section>
+</div>
+
+           <!-- =============footer ======================-->
+        <div th:replace="fragments :: footer"></div>
+
+
+          <!-- scripts -->
+<!-- ===========owl carousel======== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ <script th:src="@{/js/owl.js}"></script>
+
+ <script>
+    function toggleSportFilter(id) {
+    const content = document.getElementById('sport-' + id);
+    const icon = document.getElementById('icon-sport-' + id);
+    content.classList.toggle('hidden');
+    icon.classList.toggle('fa-chevron-down');
+    icon.classList.toggle('fa-chevron-up');
+}
+
+const sportPriceRange = document.getElementById('sportPriceRange');
+const sportMaxVal = document.getElementById('sportMaxVal');
+
+sportPriceRange.addEventListener('input', () => {
+    sportMaxVal.innerText = parseInt(sportPriceRange.value).toLocaleString();
+    filterSports();
+});
+
+document.querySelectorAll('input[name="sporttype"]').forEach(r => {
+    r.addEventListener('change', filterSports);
+});
+
+document.querySelectorAll('input[name="sportcity"]').forEach(r => {
+    r.addEventListener('change', filterSports);
+});
+
+function filterSports() {
+    const maxPrice = parseInt(sportPriceRange.value);
+    const selectedType = document.querySelector('input[name="sporttype"]:checked').value;
+    const selectedCity = document.querySelector('input[name="sportcity"]:checked').value;
+
+    document.querySelectorAll('.sport-card').forEach(card => {
+        const price = parseInt(card.dataset.price);
+        const category = card.dataset.category;
+        const city = card.dataset.city;
+
+        let show = true;
+        if (price > maxPrice) show = false;
+        if (selectedType !== 'all' && category !== selectedType) show = false;
+        if (selectedCity !== 'all' && city !== selectedCity) show = false;
+
+        card.style.display = show ? 'block' : 'none';
+    });
+}
+ </script>
+
+    </body>
+
+    </html>
