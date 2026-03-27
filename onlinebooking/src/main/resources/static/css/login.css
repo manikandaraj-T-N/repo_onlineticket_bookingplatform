@@ -537,11 +537,12 @@ footer p,ul li{
 @media (max-width: 1199px) {
   .navbar .menu {
     padding: 15px 20px 15px 60px;
+     clip-path: none;  
   }
 
   .booking-menus .booking-options {
-    gap: 30px;
-    font-size: 16px;
+    gap: 25px;
+    font-size: 15px;
   }
 
   .login-picture img {
@@ -676,12 +677,24 @@ footer p,ul li{
   .navbar .emailandphone {
     flex-direction: column;
     align-items: flex-start;
-    font-size: 13px;
+     font-size: 12px;
+    gap: 6px;
+    padding: 8px 12px;
   }
 
   .navbar .menu {
-    padding: 10px;
-  }
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 12px;
+    }
+
+    .navbar .menu .menu-1 {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    
 
   .navbar .menu .nav-link p {
     font-size: 13px;
